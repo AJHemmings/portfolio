@@ -1,4 +1,4 @@
-import emailjs from "@emailjs/browser";
+import nodemailer from "nodemailer";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -7,21 +7,31 @@ export default async function handler(req, res) {
 
   const { name, email, company, message } = req.body;
 
+  // Create a transporter using your email service (e.g., Gmail)
+  const transporter = nodemailer.createTransport({
+    service: "gmail", // Replace with your email service
+    auth: {
+      user: process.env.EMAIL_USER, // Your email address
+      pass: process.env.EMAIL_PASSWORD, // Your email password or app password
+    },
+  });
+
+  // Define email options
+  const mailOptions = {
+    from: process.env.EMAIL_USER, // Sender address
+    to: process.env.EMAIL_USER, // Recipient address (can be the same as sender)
+    subject: `New message from ${name} (${email})`,
+    text: `
+      Name: ${name}
+      Email: ${email}
+      Company: ${company || "Not provided"}
+      Message: ${message}
+    `,
+  };
+
   try {
-    // Replace with your EmailJS service ID, template ID, and user ID
-    const serviceId = "service_qjxgcgn";
-    const templateId = "template_j77hjvg";
-    const userId = "S8op53qNaBKTEKzlG";
-
-    const templateParams = {
-      from_name: name,
-      from_email: email,
-      company: company || "Not provided",
-      message: message,
-    };
-
-    await emailjs.send(serviceId, templateId, templateParams, userId);
-
+    // Send the email
+    await transporter.sendMail(mailOptions);
     res.status(200).json({ message: "Email sent successfully" });
   } catch (error) {
     console.error("Error sending email:", error);
