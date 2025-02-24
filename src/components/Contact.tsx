@@ -1,7 +1,6 @@
 "use client"; // Required for client-side interactivity
 
-import type React from "react";
-import { useState } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -17,11 +16,25 @@ const Contact: React.FC = () => {
 
   // Handle form input changes
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
+  // Clear error when form data changes
+  useEffect(() => {
+    if (error && (formData.name || formData.email || formData.message)) {
+      setError("");
+    }
+  }, [formData, error]);
+
+  // Clear success message when form data changes
+  useEffect(() => {
+    if (isSuccess && (formData.name || formData.email || formData.message)) {
+      setIsSuccess(false);
+    }
+  }, [formData, isSuccess]);
 
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -53,6 +66,7 @@ const Contact: React.FC = () => {
       setIsSuccess(true);
       setFormData({ name: "", email: "", company: "", message: "" }); // Reset form
     } catch (err) {
+      console.error("Error sending message:", err); // Log the error
       setError(
         "An error occurred while sending your message. Please try again."
       );
