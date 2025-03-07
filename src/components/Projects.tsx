@@ -22,24 +22,24 @@ interface Project {
 const projects: Project[] = [
   {
     id: 1,
-    title: "Mega OX",
+    title: "Novari",
     description:
-      "Mega OX is a full-stack online twist on naughts and crosses, featuring a macro board and 9 micro boards. Each player’s move is strategically determined by the opponent’s previous turn, adding a thrilling layer of complexity.",
-    skills: ["React", "Node.js", "JavaScript", "OOP"],
-    image: "/megaoxpic1.png",
-    currentState: "Early alpha - Game is being transitioned to OOP",
+      "Navri is a platform designed to make personal growth accessible, interactive and community-driven.",
+    skills: ["React", "Node.js", "TypeScript", "DevOps", "Tailwind-CSS", "SQL", "Supabase"],
+    image: "/novari home.png",
+    currentState: "Beta - In developement",
     featuresInDevelopment: [
-      "Initialization of multiple game boards",
-      "Win condition for multiple boards",
+      "Gamification",
+      "RAG - Vector database",
     ],
     plannedFeatures: [
-      "User Profiles",
+      "Community AI",
       "Customization options",
-      "Network play",
-      "Leaderboards",
+      "More ember task options",
+      "User profile options",
     ],
-    repoLink: "https://github.com/AJHemmings/MEGA-OX",
-    deployedLink: "https://mega-2s2ptn1dy-adams-projects-ff804fb2.vercel.app/",
+    repoLink: "https://github.com/AJHemmings/Novari",
+    deployedLink: "https://well-being-app-final-project-git-73beeb-adams-projects-ff804fb2.vercel.app/",
   },
   {
     id: 2,
@@ -97,6 +97,28 @@ const projects: Project[] = [
     repoLink:
       "https://www.canva.com/design/DAGfo7sA0rE/r0849jAvieA1ryT9jX40oQ/edit?utm_content=DAGfo7sA0rE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton",
     deployedLink: "https://youtu.be/89kiLc8i-B0",
+  },
+
+  {
+    id: 5,
+    title: "Mega OX",
+    description:
+      "Mega OX is a full-stack online twist on naughts and crosses, featuring a macro board and 9 micro boards. Each player’s move is strategically determined by the opponent’s previous turn, adding a thrilling layer of complexity.",
+    skills: ["React", "Node.js", "JavaScript", "OOP"],
+    image: "/megaoxpic1.png",
+    currentState: "Early alpha - Game is being transitioned to OOP",
+    featuresInDevelopment: [
+      "Initialization of multiple game boards",
+      "Win condition for multiple boards",
+    ],
+    plannedFeatures: [
+      "User Profiles",
+      "Customization options",
+      "Network play",
+      "Leaderboards",
+    ],
+    repoLink: "https://github.com/AJHemmings/MEGA-OX",
+    deployedLink: "https://mega-2s2ptn1dy-adams-projects-ff804fb2.vercel.app/",
   },
 ];
 
