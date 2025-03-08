@@ -27,7 +27,7 @@ const projects: Project[] = [
       "Navri is a platform designed to make personal growth accessible, interactive and community-driven.",
     skills: ["React", "Node.js", "TypeScript", "DevOps", "Tailwind-CSS", "SQL", "Supabase"],
     image: "/novari home.png",
-    currentState: "Beta - In developement",
+    currentState: "Beta - In developement : please use this guest account to log in - guest@demo.com - demopassword1234",
     featuresInDevelopment: [
       "Gamification",
       "RAG - Vector database",
