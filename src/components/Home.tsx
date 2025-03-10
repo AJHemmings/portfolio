@@ -12,7 +12,7 @@ const Home: React.FC = () => {
         <h1 className="text-6xl md:text-8xl font-bold mb-4">Adam Hemmings</h1>
         {/* Subheading (your title or tagline) */}
         <p className="text-2xl md:text-3xl max-w-2xl">
-          Junior Developer | Building with Purpose
+          Junior Full Stack Developer | Building with Purpose
         </p>
         {/* Note: The "About Me" button has been removed */}
       </div>
