@@ -9,7 +9,7 @@ const skills = [
   { name: "React", image: "/react-original.svg" },
   { name: "Node.js", image: "/nodejs-original-wordmark.svg" },
   { name: "Next.js", image: "/nextjs-original.svg" },
-  { name: "Python", image: "/python-original.svg" },
+  { name: "DevOps", image: "/devops.svg" },
   { name: "HTML", image: "/html5-original.svg" },
   { name: "CSS", image: "/css3-original.svg" },
   { name: "Tailwind CSS", image: "/tailwindcss-original.svg" },
