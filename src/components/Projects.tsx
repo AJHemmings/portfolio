@@ -40,8 +40,8 @@ const projects: Project[] = [
       "CI/CD",
     ],
     image: "/novari home.png",
-    imageOne: "",
-    imageTwo: "",
+    imageOne: "/novari-community.png",
+    imageTwo: "/user-profile.png",
     currentState:
       "In developement : please use this guest account to log in - guest@demo.com - demopassword1234",
     featuresInDevelopment: ["Gamification", "RAG - Vector database"],
@@ -63,10 +63,9 @@ const projects: Project[] = [
       "Recipe Book Web App – A React-based project leveraging a JSON server for efficient development, enabling students to find and create budget-friendly meals. Demonstrates proficiency in React, JSON, and full-stack development for practical, real-world solutions.",
     skills: ["React", "JSON", "JavaScript", "Node.js"],
     image: "/react app web app.png",
-    imageOne: "",
-    imageTwo: "",
-    currentState:
-      "Dev - Deployed but no back-end. To add new recipes requires local hosting with JSON server to populate the db.json.",
+    imageOne: "/recipe-card.png",
+    imageTwo: "/recipe-card-instructions.png",
+    currentState: "Dev - Deployed for testing and portfolio",
     featuresInDevelopment: ["Back-end database", "Form input formatting"],
     plannedFeatures: [
       "Styling",
@@ -74,37 +73,10 @@ const projects: Project[] = [
       "Randomizer",
       "On-click shopping list creation",
     ],
-    knownBugs: "No database, unable to add recipe on prod",
+    knownBugs:
+      "No formatting for uploaded ingredients or instructions | currently displaying same main image on flipped card instead of chopping board background.",
     repoLink: "https://github.com/AJHemmings/Reciepe-book-web-app/tree/main",
     deployedLink: "https://reciepe-book-web-app-phi.vercel.app/",
-  },
-  {
-    id: 3,
-    title: "SoC Legacy App",
-    description:
-      "The SOC Legacy App unites developers of all levels, fostering mentorship, collaboration, and resource sharing. Continuing the spirit of The School of Code, it empowers individuals to shape the future of tech together.",
-    skills: ["React", "TypeScript", "Next.js", "TailWind"],
-    image: "/soclegacy.png",
-    imageOne: "",
-    imageTwo: "",
-    currentState:
-      "Dev - basic user profile creation and editing. Issue with legacy deps. Not deployed.",
-    featuresInDevelopment: [
-      "Dependency updates",
-      "Containerization",
-      "Deployment",
-    ],
-    plannedFeatures: [
-      "User matching logic",
-      "Notifications",
-      "Private messaging",
-      "Learning materials",
-      "Calendar linking",
-    ],
-    knownBugs:
-      "No database | unable to make new account | Legacy Deps conflict | Build conflict",
-    repoLink: "https://github.com/yourusername/fitness-tracker",
-    deployedLink: "",
   },
   {
     id: 4,
@@ -113,8 +85,8 @@ const projects: Project[] = [
       "JavaScript OOP Learning Material – A concise guide showcasing advanced Object-Oriented Programming concepts, designed to demonstrate clear articulation and deep understanding of JavaScript’s powerful OOP capabilities.",
     skills: ["JavaScript", "OOP", "Content Creation", "Canva", "YouTube"],
     image: "/oop in js.png",
-    imageOne: "",
-    imageTwo: "",
+    imageOne: "/oop-ceo.png",
+    imageTwo: "/oop-in-js-1.png",
     currentState: "Released",
     featuresInDevelopment: ["New concept ideas", "Video editing"],
     plannedFeatures: ["More topics/concepts", "Move to Scrimba"],
@@ -131,9 +103,10 @@ const projects: Project[] = [
       "Mega OX is a full-stack online twist on naughts and crosses, featuring a macro board and 9 micro boards. Each player’s move is strategically determined by the opponent’s previous turn, adding a thrilling layer of complexity.",
     skills: ["React", "Node.js", "JavaScript", "OOP"],
     image: "/megaoxpic1.png",
-    imageOne: "",
-    imageTwo: "",
-    currentState: "Prototype/Dev - Game is being transitioned to OOP",
+    imageOne: "/oop-board.png",
+    imageTwo: "/oop-game.png",
+    currentState:
+      "Prototype/Dev - Game is being transitioned to OOP from vanilla JS",
     featuresInDevelopment: [
       "Initialization of multiple game boards",
       "Win condition for multiple boards",
@@ -194,10 +167,17 @@ const ProjectCard: React.FC<{ project: Project; onClick: () => void }> = ({
   );
 };
 
+interface ProjectModalProps {
+  project: Project;
+  onClose: () => void;
+  onImageClick: (image: string) => void;
+}
+
 // ProjectModal component
-const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({
+const ProjectModal: React.FC<ProjectModalProps> = ({
   project,
   onClose,
+  onImageClick,
 }) => {
   return (
     // Modal overlay
@@ -235,6 +215,9 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({
               width={400}
               height={300}
               className="w-full h-64 object-cover rounded-lg"
+              onClick={() =>
+                onImageClick(project.imageOne || "/placeholder.svg")
+              }
             />
             <Image
               src={project.imageTwo || "/placeholder.svg"}
@@ -242,6 +225,9 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({
               width={400}
               height={300}
               className="w-full h-64 object-cover rounded-lg"
+              onClick={() =>
+                onImageClick(project.imageTwo || "/placeholder.svg")
+              }
             />
           </div>
           {/* Project details */}
@@ -300,6 +286,7 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({
 // Main Projects component
 const Projects: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Add horizontal scroll on mouse wheel
@@ -371,9 +358,57 @@ const Projects: React.FC = () => {
         <ProjectModal
           project={selectedProject}
           onClose={() => setSelectedProject(null)}
+          onImageClick={(image) => setSelectedImage(image)}
+        />
+      )}
+      {/* Render ImageModal when an image is selected */}
+      {selectedImage && (
+        <ImageModal
+          image={selectedImage}
+          onClose={() => setSelectedImage(null)}
         />
       )}
     </section>
+  );
+};
+
+const ImageModal: React.FC<{ image: string; onClose: () => void }> = ({
+  image,
+  onClose,
+}) => {
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden max-h-full w-full max-w-4xl">
+        <div className="p-6">
+          <button
+            onClick={onClose}
+            className="float-right text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
+          <Image
+            src={image}
+            alt="Selected Image"
+            width={800}
+            height={600}
+            className="w-full h-full object-cover rounded-lg"
+          />
+        </div>
+      </div>
+    </div>
   );
 };
 
