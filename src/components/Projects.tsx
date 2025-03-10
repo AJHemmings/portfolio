@@ -11,9 +11,12 @@ interface Project {
   description: string;
   skills: string[];
   image: string;
+  imageOne: string;
+  imageTwo: string;
   currentState: string;
   featuresInDevelopment: string[];
   plannedFeatures: string[];
+  knownBugs: string;
   repoLink: string;
   deployedLink: string;
 }
@@ -25,21 +28,33 @@ const projects: Project[] = [
     title: "Novari",
     description:
       "Navri is a platform designed to make personal growth accessible, interactive and community-driven.",
-    skills: ["React", "Node.js", "TypeScript", "DevOps", "Tailwind-CSS", "SQL", "Supabase"],
-    image: "/novari home.png",
-    currentState: "Beta - In developement : please use this guest account to log in - guest@demo.com - demopassword1234",
-    featuresInDevelopment: [
-      "Gamification",
-      "RAG - Vector database",
+    skills: [
+      "React",
+      "Node.js",
+      "TypeScript",
+      "DevOps",
+      "Tailwind-CSS",
+      "SQL",
+      "Supabase",
+      "Vercel",
+      "CI/CD",
     ],
+    image: "/novari home.png",
+    imageOne: "",
+    imageTwo: "",
+    currentState:
+      "In developement : please use this guest account to log in - guest@demo.com - demopassword1234",
+    featuresInDevelopment: ["Gamification", "RAG - Vector database"],
     plannedFeatures: [
       "Community AI",
       "Customization options",
       "More ember task options",
       "User profile options",
     ],
+    knownBugs: "Tutorial plays every time the home page is refreshed/rendered",
     repoLink: "https://github.com/AJHemmings/Novari",
-    deployedLink: "https://well-being-app-final-project-git-73beeb-adams-projects-ff804fb2.vercel.app/",
+    deployedLink:
+      "https://well-being-app-final-project-git-73beeb-adams-projects-ff804fb2.vercel.app/",
   },
   {
     id: 2,
@@ -48,8 +63,10 @@ const projects: Project[] = [
       "Recipe Book Web App – A React-based project leveraging a JSON server for efficient development, enabling students to find and create budget-friendly meals. Demonstrates proficiency in React, JSON, and full-stack development for practical, real-world solutions.",
     skills: ["React", "JSON", "JavaScript", "Node.js"],
     image: "/react app web app.png",
+    imageOne: "",
+    imageTwo: "",
     currentState:
-      "Beta - Deployed but no back-end. To add new recipes requires local hosting with JSON server to populate the db.json.",
+      "Dev - Deployed but no back-end. To add new recipes requires local hosting with JSON server to populate the db.json.",
     featuresInDevelopment: ["Back-end database", "Form input formatting"],
     plannedFeatures: [
       "Styling",
@@ -57,6 +74,7 @@ const projects: Project[] = [
       "Randomizer",
       "On-click shopping list creation",
     ],
+    knownBugs: "No database, unable to add recipe on prod",
     repoLink: "https://github.com/AJHemmings/Reciepe-book-web-app/tree/main",
     deployedLink: "https://reciepe-book-web-app-phi.vercel.app/",
   },
@@ -67,8 +85,10 @@ const projects: Project[] = [
       "The SOC Legacy App unites developers of all levels, fostering mentorship, collaboration, and resource sharing. Continuing the spirit of The School of Code, it empowers individuals to shape the future of tech together.",
     skills: ["React", "TypeScript", "Next.js", "TailWind"],
     image: "/soclegacy.png",
+    imageOne: "",
+    imageTwo: "",
     currentState:
-      "Alpha - basic user profile creation and editing. Issue with legacy deps. Not deployed.",
+      "Dev - basic user profile creation and editing. Issue with legacy deps. Not deployed.",
     featuresInDevelopment: [
       "Dependency updates",
       "Containerization",
@@ -81,6 +101,8 @@ const projects: Project[] = [
       "Learning materials",
       "Calendar linking",
     ],
+    knownBugs:
+      "No database | unable to make new account | Legacy Deps conflict | Build conflict",
     repoLink: "https://github.com/yourusername/fitness-tracker",
     deployedLink: "",
   },
@@ -91,9 +113,12 @@ const projects: Project[] = [
       "JavaScript OOP Learning Material – A concise guide showcasing advanced Object-Oriented Programming concepts, designed to demonstrate clear articulation and deep understanding of JavaScript’s powerful OOP capabilities.",
     skills: ["JavaScript", "OOP", "Content Creation", "Canva", "YouTube"],
     image: "/oop in js.png",
+    imageOne: "",
+    imageTwo: "",
     currentState: "Released",
     featuresInDevelopment: ["New concept ideas", "Video editing"],
     plannedFeatures: ["More topics/concepts", "Move to Scrimba"],
+    knownBugs: "N/A",
     repoLink:
       "https://www.canva.com/design/DAGfo7sA0rE/r0849jAvieA1ryT9jX40oQ/edit?utm_content=DAGfo7sA0rE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton",
     deployedLink: "https://youtu.be/89kiLc8i-B0",
@@ -106,7 +131,9 @@ const projects: Project[] = [
       "Mega OX is a full-stack online twist on naughts and crosses, featuring a macro board and 9 micro boards. Each player’s move is strategically determined by the opponent’s previous turn, adding a thrilling layer of complexity.",
     skills: ["React", "Node.js", "JavaScript", "OOP"],
     image: "/megaoxpic1.png",
-    currentState: "Early alpha - Game is being transitioned to OOP",
+    imageOne: "",
+    imageTwo: "",
+    currentState: "Prototype/Dev - Game is being transitioned to OOP",
     featuresInDevelopment: [
       "Initialization of multiple game boards",
       "Win condition for multiple boards",
@@ -117,6 +144,7 @@ const projects: Project[] = [
       "Network play",
       "Leaderboards",
     ],
+    knownBugs: "Win condition not being triggered, restart not rendering",
     repoLink: "https://github.com/AJHemmings/MEGA-OX",
     deployedLink: "https://mega-2s2ptn1dy-adams-projects-ff804fb2.vercel.app/",
   },
@@ -202,14 +230,14 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({
           {/* Project images */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <Image
-              src={project.image || "/placeholder.svg"}
+              src={project.imageOne || "/placeholder.svg"}
               alt={project.title}
               width={400}
               height={300}
               className="w-full h-64 object-cover rounded-lg"
             />
             <Image
-              src={project.image || "/placeholder.svg"}
+              src={project.imageTwo || "/placeholder.svg"}
               alt={project.title}
               width={400}
               height={300}
@@ -238,6 +266,11 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({
                 <li key={index}>{feature}</li>
               ))}
             </ul>
+          </div>
+          {/* Known Bugs */}
+          <div className="mb-6">
+            <h3 className="text-xl font-semibold mb-2">Known Bugs</h3>
+            <p className="text-red-500">{project.knownBugs}</p>
           </div>
           {/* Project links */}
           <div className="flex justify-between">
