@@ -27,7 +27,7 @@ const projects: Project[] = [
     id: 1,
     title: "Novari",
     description:
-      "Navri is a platform designed to make personal growth accessible, interactive and community-driven.",
+      "Novari is a platform designed to make personal growth accessible, interactive and community-driven.",
     skills: [
       "React",
       "Node.js",
