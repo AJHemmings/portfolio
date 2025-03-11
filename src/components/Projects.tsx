@@ -51,7 +51,7 @@ const projects: Project[] = [
       "More ember task options",
       "User profile options",
     ],
-    knownBugs: "Tutorial plays every time the home page is refreshed/rendered",
+    knownBugs: "Tutorial plays every time the home page is refreshed/rendered | Step one of the tutorial is not showing correctly",
     repoLink: "https://github.com/AJHemmings/Novari",
     deployedLink:
       "https://well-being-app-final-project-git-73beeb-adams-projects-ff804fb2.vercel.app/",
