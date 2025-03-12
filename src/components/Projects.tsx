@@ -50,6 +50,7 @@ const projects: Project[] = [
       "Customization options",
       "More ember task options",
       "User profile options",
+      "Interactive dashboards and analytics",
     ],
     knownBugs: "Tutorial plays every time the home page is refreshed/rendered | Step one of the tutorial is not showing correctly",
     repoLink: "https://github.com/AJHemmings/Novari",
