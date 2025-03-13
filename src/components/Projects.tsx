@@ -52,7 +52,7 @@ const projects: Project[] = [
       "User profile options",
       "Interactive dashboards and analytics",
     ],
-    knownBugs: "Tutorial plays every time the home page is refreshed/rendered | Step one of the tutorial is not showing correctly",
+    knownBugs: "Sign up under construction | Tutorial plays every time the home page is refreshed/rendered | Step one of the tutorial is not showing correctly",
     repoLink: "https://github.com/AJHemmings/Novari",
     deployedLink:
       "https://well-being-app-final-project-git-73beeb-adams-projects-ff804fb2.vercel.app/",
