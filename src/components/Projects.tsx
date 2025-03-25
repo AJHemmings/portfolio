@@ -43,7 +43,7 @@ const projects: Project[] = [
     imageOne: "/novari-community.png",
     imageTwo: "/user-profile.png",
     currentState:
-      "In developement : please use this guest account to log in - guest@demo.com - demopassword1234",
+      "In developement : please sign up for an account or use a temp email to access the website",
     featuresInDevelopment: ["Gamification", "RAG - Vector database"],
     plannedFeatures: [
       "Community AI",
