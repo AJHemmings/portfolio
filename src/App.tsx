@@ -1,20 +1,21 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useEffect } from "react"
-import Navbar from "./components/Navbar"
-import DarkModeToggle from "./components/DarkModeToggle"
-import Home from "./components/Home"
-import About from "./components/About"
-import Skills from "./components/Skills"
-import Projects from "./components/Projects"
-import Contact from "./components/Contact"
+import type React from "react";
+import { useEffect } from "react";
+import Navbar from "./components/Navbar";
+import DarkModeToggle from "./components/DarkModeToggle";
+import Home from "./components/Home";
+import About from "./components/About";
+import Skills from "./components/Skills";
+import Projects from "./components/Projects";
+import Contact from "./components/Contact";
+import { Analytics } from "@vercel/analytics/react";
 
 const App: React.FC = () => {
   useEffect(() => {
     // Set dark mode by default
-    document.documentElement.classList.add("dark")
-  }, [])
+    document.documentElement.classList.add("dark");
+  }, []);
 
   return (
     // Main container for the entire application
@@ -33,8 +34,7 @@ const App: React.FC = () => {
         <Contact />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default App
-
+export default App;
