@@ -27,7 +27,7 @@ const projects: Project[] = [
     id: 1,
     title: "Novari",
     description:
-      "Navri is a platform designed to make personal growth accessible, interactive and community-driven.",
+      "Novari is a platform designed to make personal growth accessible, interactive and community-driven.",
     skills: [
       "React",
       "Node.js",
@@ -43,18 +43,19 @@ const projects: Project[] = [
     imageOne: "/novari-community.png",
     imageTwo: "/user-profile.png",
     currentState:
-      "In developement : please use this guest account to log in - guest@demo.com - demopassword1234",
+      "In developement : please sign up for an account or use a temp email to access the website",
     featuresInDevelopment: ["Gamification", "RAG - Vector database"],
     plannedFeatures: [
       "Community AI",
       "Customization options",
       "More ember task options",
       "User profile options",
+      "Interactive dashboards and analytics",
     ],
-    knownBugs: "Tutorial plays every time the home page is refreshed/rendered",
+    knownBugs: "Sign up under construction | Tutorial plays every time the home page is refreshed/rendered | Step one of the tutorial is not showing correctly",
     repoLink: "https://github.com/AJHemmings/Novari",
     deployedLink:
-      "https://well-being-app-final-project-git-73beeb-adams-projects-ff804fb2.vercel.app/",
+      "https://novari-git-main-adams-projects-ff804fb2.vercel.app/auth/signin",
   },
   {
     id: 2,
