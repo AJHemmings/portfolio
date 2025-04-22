@@ -96,9 +96,33 @@ const projects: Project[] = [
       "https://www.canva.com/design/DAGfo7sA0rE/r0849jAvieA1ryT9jX40oQ/edit?utm_content=DAGfo7sA0rE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton",
     deployedLink: "https://youtu.be/89kiLc8i-B0",
   },
+    {
+    id: 5,
+    title: "Personal Movie Recommendations",
+    description:
+      "A personal recommendation app that gives you vector based similarity searches based on user input from a movie database using Pinecone AI.",
+    skills: ["React", "Node.js", "JavaScript"],
+    image: "/movie1.png",
+    imageOne: "/movie1.png",
+    imageTwo: "/movie2.png",
+    currentState:
+      "Dev - Under development",
+    featuresInDevelopment: [
+      "User lists - watched - watching - waiting",
+    ],
+    plannedFeatures: [
+      "User Profiles",
+      "Customization options",
+      "Movie thumbnails",
+      "Comment sections",
+    ],
+    knownBugs: "Database is currently offline | CSS scrolling on sides refreshes everytime a character is typed on the keyboard",
+    repoLink: "https://github.com/AJHemmings/Movie-Recommendation-Library",
+    deployedLink: "movie-recommendation-library-r3m4sd028-adams-projects-ff804fb2.vercel.app",
+  },
 
   {
-    id: 5,
+    id: 6,
     title: "Mega OX",
     description:
       "Mega OX is a full-stack online twist on naughts and crosses, featuring a macro board and 9 micro boards. Each player’s move is strategically determined by the opponent’s previous turn, adding a thrilling layer of complexity.",
