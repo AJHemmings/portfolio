@@ -43,7 +43,7 @@ const projects: Project[] = [
     imageOne: "/novari-community.png",
     imageTwo: "/user-profile.png",
     currentState:
-      "In developement : please sign in with email - guest@demo.com | password - demopassword1234 ",
+      "In developement : please sign up OR sign in with email - guest@demo.com | password - demopassword1234 ",
     featuresInDevelopment: ["Gamification", "RAG - Vector database"],
     plannedFeatures: [
       "Community AI",
@@ -52,7 +52,7 @@ const projects: Project[] = [
       "User profile options",
       "Interactive dashboards and analytics",
     ],
-    knownBugs: "Sign up under construction | Tutorial plays every time the home page is refreshed/rendered | Step one of the tutorial is not showing correctly",
+    knownBugs: " Tutorial plays every time the home page is refreshed/rendered | Step one of the tutorial is not showing correctly",
     repoLink: "https://github.com/AJHemmings/Novari",
     deployedLink:
       "https://novari-git-main-adams-projects-ff804fb2.vercel.app/auth/signin",
