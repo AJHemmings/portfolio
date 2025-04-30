@@ -120,32 +120,6 @@ const projects: Project[] = [
     repoLink: "https://github.com/AJHemmings/Movie-Recommendation-Library",
     deployedLink: "movie-recommendation-library-r3m4sd028-adams-projects-ff804fb2.vercel.app",
   },
-
-  {
-    id: 6,
-    title: "Mega OX",
-    description:
-      "Mega OX is a full-stack online twist on naughts and crosses, featuring a macro board and 9 micro boards. Each player’s move is strategically determined by the opponent’s previous turn, adding a thrilling layer of complexity.",
-    skills: ["React", "Node.js", "JavaScript", "OOP"],
-    image: "/megaoxpic1.png",
-    imageOne: "/oop-board.png",
-    imageTwo: "/oop-game.png",
-    currentState:
-      "Prototype/Dev - Game is being transitioned to OOP from vanilla JS",
-    featuresInDevelopment: [
-      "Initialization of multiple game boards",
-      "Win condition for multiple boards",
-    ],
-    plannedFeatures: [
-      "User Profiles",
-      "Customization options",
-      "Network play",
-      "Leaderboards",
-    ],
-    knownBugs: "Win condition not being triggered, restart not rendering",
-    repoLink: "https://github.com/AJHemmings/MEGA-OX",
-    deployedLink: "https://mega-2s2ptn1dy-adams-projects-ff804fb2.vercel.app/",
-  },
 ];
 
 // Project cards
