@@ -17,6 +17,7 @@ interface Project {
   featuresInDevelopment: string[];
   plannedFeatures: string[];
   knownBugs: string;
+  versionHistory: string;
   repoLink: string;
   deployedLink: string;
 }
@@ -44,15 +45,14 @@ const projects: Project[] = [
     imageTwo: "/user-profile.png",
     currentState:
       "In developement : please sign up OR sign in with email - guest@demo.com | password - demopassword1234 ",
-    featuresInDevelopment: ["Gamification", "RAG - Vector database"],
+    featuresInDevelopment: ["Gamification", "Task completion list"],
     plannedFeatures: [
-      "Community AI",
-      "Customization options",
+      "RAG - Vector database",
+      "Profile Customization options",
       "More ember task options",
-      "User profile options",
       "Interactive dashboards and analytics",
     ],
-    knownBugs: " Tutorial plays every time the home page is refreshed/rendered | Step one of the tutorial is not showing correctly",
+    knownBugs: ,
     repoLink: "https://github.com/AJHemmings/Novari",
     deployedLink:
       "https://novari-git-main-adams-projects-ff804fb2.vercel.app/auth/signin",
@@ -67,15 +67,15 @@ const projects: Project[] = [
     imageOne: "/recipe-card.png",
     imageTwo: "/recipe-card-instructions.png",
     currentState: "Dev - Deployed for testing and portfolio",
-    featuresInDevelopment: ["Back-end database", "Form input formatting"],
+    featuresInDevelopment: ["User signup", "User Profiles"],
     plannedFeatures: [
       "Styling",
       "Favorites",
       "Randomizer",
       "On-click shopping list creation",
     ],
-    knownBugs:
-      "No formatting for uploaded ingredients or instructions | currently displaying same main image on flipped card instead of chopping board background.",
+    knownBugs:,
+    versionHistory "https://docs.google.com/document/d/1iAXr8d8GiVJGw_w-mQ_rHdtpWsWzaJQgMw1SSjUm2oQ/edit?tab=t.0#heading=h.szw5dovys7bs",
     repoLink: "https://github.com/AJHemmings/Reciepe-book-web-app/tree/main",
     deployedLink: "https://reciepe-book-web-app-phi.vercel.app/",
   },
@@ -107,11 +107,9 @@ const projects: Project[] = [
     imageTwo: "/movie2.png",
     currentState:
       "Dev - Under development",
-    featuresInDevelopment: [
-      "User lists - watched - watching - waiting",
-    ],
+    featuresInDevelopment: ["User signup", "User Profiles"],
     plannedFeatures: [
-      "User Profiles",
+      "User lists - watched - watching - waiting",
       "Customization options",
       "Movie thumbnails",
       "Comment sections",
