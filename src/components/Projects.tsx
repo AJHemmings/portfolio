@@ -76,7 +76,7 @@ const projects: Project[] = [
       "On-click shopping list creation",
     ],
     knownBugs: "N/A",
-    versionHistory "https://docs.google.com/document/d/1iAXr8d8GiVJGw_w-mQ_rHdtpWsWzaJQgMw1SSjUm2oQ/edit?tab=t.0#heading=h.szw5dovys7bs",
+    versionHistory: "https://docs.google.com/document/d/1iAXr8d8GiVJGw_w-mQ_rHdtpWsWzaJQgMw1SSjUm2oQ/edit?tab=t.0#heading=h.szw5dovys7bs",
     repoLink: "https://github.com/AJHemmings/Reciepe-book-web-app/tree/main",
     deployedLink: "https://reciepe-book-web-app-phi.vercel.app/",
   },
