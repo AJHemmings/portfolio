@@ -116,7 +116,7 @@ const projects: Project[] = [
     ],
     knownBugs: "Database is currently offline | CSS scrolling on sides refreshes everytime a character is typed on the keyboard",
     repoLink: "https://github.com/AJHemmings/Movie-Recommendation-Library",
-    deployedLink: "movie-recommendation-library-r3m4sd028-adams-projects-ff804fb2.vercel.app",
+    deployedLink: "https://movie-recommendation-library.vercel.app/",
   },
 ];
 
