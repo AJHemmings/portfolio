@@ -17,7 +17,10 @@ interface Project {
   featuresInDevelopment: string[];
   plannedFeatures: string[];
   knownBugs: string;
-  versionHistory: string;
+  versionHistory: {
+    label: string;
+    url: string;
+  } | null;
   repoLink: string;
   deployedLink: string;
 }
@@ -53,7 +56,7 @@ const projects: Project[] = [
       "Interactive dashboards and analytics",
     ],
     knownBugs: "N/A",
-    versionHistory: "",
+    versionHistory: null,
     repoLink: "https://github.com/AJHemmings/Novari",
     deployedLink:
       "https://novari-git-main-adams-projects-ff804fb2.vercel.app/auth/signin",
@@ -76,7 +79,10 @@ const projects: Project[] = [
       "On-click shopping list creation",
     ],
     knownBugs: "N/A",
-    versionHistory: "https://docs.google.com/document/d/1iAXr8d8GiVJGw_w-mQ_rHdtpWsWzaJQgMw1SSjUm2oQ/edit?tab=t.0#heading=h.szw5dovys7bs",
+    versionHistory: {
+      label: "V 1.1.0 - View Changelog",
+      url: "https://docs.google.com/document/d/1iAXr8d8GiVJGw_w-mQ_rHdtpWsWzaJQgMw1SSjUm2oQ/edit?tab=t.0#heading=h.szw5dovys7bs",
+    },
     repoLink: "https://github.com/AJHemmings/Reciepe-book-web-app/tree/main",
     deployedLink: "https://reciepe-book-web-app-phi.vercel.app/",
   },
@@ -93,12 +99,12 @@ const projects: Project[] = [
     featuresInDevelopment: ["New concept ideas", "Video editing"],
     plannedFeatures: ["More topics/concepts", "Move to Scrimba"],
     knownBugs: "N/A",
-    versionHistory: "",
+    versionHistory: null,
     repoLink:
       "https://www.canva.com/design/DAGfo7sA0rE/r0849jAvieA1ryT9jX40oQ/edit?utm_content=DAGfo7sA0rE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton",
     deployedLink: "https://youtu.be/89kiLc8i-B0",
   },
-    {
+  {
     id: 5,
     title: "Personal Movie Recommendations",
     description:
@@ -107,8 +113,7 @@ const projects: Project[] = [
     image: "/movie1.png",
     imageOne: "/movie1.png",
     imageTwo: "/movie2.png",
-    currentState:
-      "Dev - Under development",
+    currentState: "Dev - Under development",
     featuresInDevelopment: ["User signup", "User Profiles"],
     plannedFeatures: [
       "User lists - watched - watching - waiting",
@@ -116,8 +121,9 @@ const projects: Project[] = [
       "Movie thumbnails",
       "Comment sections",
     ],
-    knownBugs: "Database is currently offline | CSS scrolling on sides refreshes everytime a character is typed on the keyboard",
-    versionHistory: "",
+    knownBugs:
+      "Database is currently offline | CSS scrolling on sides refreshes everytime a character is typed on the keyboard",
+    versionHistory: null,
     repoLink: "https://github.com/AJHemmings/Movie-Recommendation-Library",
     deployedLink: "https://movie-recommendation-library.vercel.app/",
   },
@@ -180,12 +186,9 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
   onImageClick,
 }) => {
   return (
-    // Modal overlay
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      {/* Modal content */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-y-auto max-h-full w-full max-w-4xl">
         <div className="p-6">
-          {/* Close button */}
           <button
             onClick={onClose}
             className="float-right text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
@@ -205,9 +208,11 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
               ></path>
             </svg>
           </button>
-          {/* Project title */}
-          <h2 className="text-3xl font-bold mb-4">{project.title}</h2>
-          {/* Project images */}
+
+          <h2 className="text-center text-3xl font-bold mb-4">
+            {project.title}
+          </h2>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <Image
               src={project.imageOne || "/placeholder.svg"}
@@ -230,35 +235,64 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
               }
             />
           </div>
-          {/* Project details */}
-          <div className="mb-6">
-            <h3 className="text-xl font-semibold mb-2">Current State</h3>
-            <p>{project.currentState}</p>
+
+          {/* Split columns container */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
+            {/* Left Column */}
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-xl font-semibold mb-2">Current State</h3>
+                <p>{project.currentState}</p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold mb-2">
+                  Features in Development
+                </h3>
+                <ul className="list-disc list-inside">
+                  {project.featuresInDevelopment.map((feature, index) => (
+                    <li key={index}>{feature}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold mb-2">Planned Features</h3>
+                <ul className="list-disc list-inside">
+                  {project.plannedFeatures.map((feature, index) => (
+                    <li key={index}>{feature}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* Right Column */}
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-xl font-semibold mb-2">Known Bugs</h3>
+                <p className="text-red-500">{project.knownBugs}</p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold mb-2">Version History</h3>
+                {project.versionHistory ? (
+                  <a
+                    href={project.versionHistory.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:underline"
+                  >
+                    {project.versionHistory.label}
+                  </a>
+                ) : (
+                  <span className="text-yellow-600">
+                    Work in Progress (WIP)
+                  </span>
+                )}
+              </div>
+            </div>
           </div>
-          <div className="mb-6">
-            <h3 className="text-xl font-semibold mb-2">
-              Features in Development
-            </h3>
-            <ul className="list-disc list-inside">
-              {project.featuresInDevelopment.map((feature, index) => (
-                <li key={index}>{feature}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="mb-6">
-            <h3 className="text-xl font-semibold mb-2">Planned Features</h3>
-            <ul className="list-disc list-inside">
-              {project.plannedFeatures.map((feature, index) => (
-                <li key={index}>{feature}</li>
-              ))}
-            </ul>
-          </div>
-          {/* Known Bugs */}
-          <div className="mb-6">
-            <h3 className="text-xl font-semibold mb-2">Known Bugs</h3>
-            <p className="text-red-500">{project.knownBugs}</p>
-          </div>
-          {/* Project links */}
+
           <div className="flex justify-between">
             <a
               href={project.repoLink}
