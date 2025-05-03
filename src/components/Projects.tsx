@@ -53,6 +53,7 @@ const projects: Project[] = [
       "Interactive dashboards and analytics",
     ],
     knownBugs: ,
+    versionHistory: ,
     repoLink: "https://github.com/AJHemmings/Novari",
     deployedLink:
       "https://novari-git-main-adams-projects-ff804fb2.vercel.app/auth/signin",
@@ -92,6 +93,7 @@ const projects: Project[] = [
     featuresInDevelopment: ["New concept ideas", "Video editing"],
     plannedFeatures: ["More topics/concepts", "Move to Scrimba"],
     knownBugs: "N/A",
+    versionHistory: ,
     repoLink:
       "https://www.canva.com/design/DAGfo7sA0rE/r0849jAvieA1ryT9jX40oQ/edit?utm_content=DAGfo7sA0rE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton",
     deployedLink: "https://youtu.be/89kiLc8i-B0",
@@ -115,6 +117,7 @@ const projects: Project[] = [
       "Comment sections",
     ],
     knownBugs: "Database is currently offline | CSS scrolling on sides refreshes everytime a character is typed on the keyboard",
+    versionHistory: ,
     repoLink: "https://github.com/AJHemmings/Movie-Recommendation-Library",
     deployedLink: "https://movie-recommendation-library.vercel.app/",
   },
