@@ -94,7 +94,7 @@ const projects: Project[] = [
     skills: ["JavaScript", "OOP", "React"],
     image: "/megaoxpic1.png",
     imageOne: "/megaoxpic1.png",
-    imageTwo: "/megaoxpic12.png",
+    imageTwo: "/megaoxpic2.png",
     currentState: "Beta - Deployed",
     featuresInDevelopment: ["User Profiles", "Network Play"],
     plannedFeatures: [
