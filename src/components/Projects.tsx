@@ -104,7 +104,10 @@ const projects: Project[] = [
       "Friends List",
     ],
     knownBugs: "N/A",
-    versionHistory: null,
+    versionHistory: {
+      label: "V 1.1.0 - View Changelog",
+      url: "https://docs.google.com/document/d/1ItdRho5sCXa5rDfcBwENUHvwSCQrPYe-gKicPalCIdM/edit?usp=sharing",
+    },
     repoLink: "https://github.com/AJHemmings/MEGA-OX",
     deployedLink: "https://mega-ox.vercel.app/",
   },
