@@ -88,6 +88,28 @@ const projects: Project[] = [
   },
   {
     id: 4,
+    title: "Mega OX",
+    description:
+      "A modern twist on the classic Naughts and Crosses (Tic-Tac-Toe) game. The game features a macro board with 9 micro boards in each cell, creating a layered and strategic gameplay experience. Two players take turns selecting cells on the macro and micro boards, with the goal to win 3 micro boards in a row on the macro board.",
+    skills: ["JavaScript", "OOP", "React"],
+    image: "/megaoxpic1.png",
+    imageOne: "/megaoxpic1.png",
+    imageTwo: "/megaoxpic12.png",
+    currentState: "Beta - Deployed",
+    featuresInDevelopment: ["User Profiles", "Network Play"],
+    plannedFeatures: [
+      "Ladders",
+      "Profile Customization",
+      "Communication",
+      "Friends List",
+    ],
+    knownBugs: "N/A",
+    versionHistory: null,
+    repoLink: "https://github.com/AJHemmings/MEGA-OX",
+    deployedLink: "https://mega-ox.vercel.app/",
+  },
+  {
+    id: 5,
     title: "Learning Material Content",
     description:
       "JavaScript OOP Learning Material – A concise guide showcasing advanced Object-Oriented Programming concepts, designed to demonstrate clear articulation and deep understanding of JavaScript’s powerful OOP capabilities.",
@@ -104,29 +126,30 @@ const projects: Project[] = [
       "https://www.canva.com/design/DAGfo7sA0rE/r0849jAvieA1ryT9jX40oQ/edit?utm_content=DAGfo7sA0rE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton",
     deployedLink: "https://youtu.be/89kiLc8i-B0",
   },
-  {
-    id: 5,
-    title: "Personal Movie Recommendations",
-    description:
-      "A personal recommendation app that gives you vector based similarity searches based on user input from a movie database using Pinecone AI.",
-    skills: ["React", "Node.js", "JavaScript"],
-    image: "/movie1.png",
-    imageOne: "/movie1.png",
-    imageTwo: "/movie2.png",
-    currentState: "Dev - Under development",
-    featuresInDevelopment: ["User signup", "User Profiles"],
-    plannedFeatures: [
-      "User lists - watched - watching - waiting",
-      "Customization options",
-      "Movie thumbnails",
-      "Comment sections",
-    ],
-    knownBugs:
-      "Database is currently offline | CSS scrolling on sides refreshes everytime a character is typed on the keyboard",
-    versionHistory: null,
-    repoLink: "https://github.com/AJHemmings/Movie-Recommendation-Library",
-    deployedLink: "https://movie-recommendation-library.vercel.app/",
-  },
+
+  // {
+  //   id: 5,
+  //   title: "Personal Movie Recommendations",
+  //   description:
+  //     "A personal recommendation app that gives you vector based similarity searches based on user input from a movie database using Pinecone AI.",
+  //   skills: ["React", "Node.js", "JavaScript"],
+  //   image: "/movie1.png",
+  //   imageOne: "/movie1.png",
+  //   imageTwo: "/movie2.png",
+  //   currentState: "Dev - Under development",
+  //   featuresInDevelopment: ["User signup", "User Profiles"],
+  //   plannedFeatures: [
+  //     "User lists - watched - watching - waiting",
+  //     "Customization options",
+  //     "Movie thumbnails",
+  //     "Comment sections",
+  //   ],
+  //   knownBugs:
+  //     "Database is currently offline | CSS scrolling on sides refreshes everytime a character is typed on the keyboard",
+  //   versionHistory: null,
+  //   repoLink: "https://github.com/AJHemmings/Movie-Recommendation-Library",
+  //   deployedLink: "https://movie-recommendation-library.vercel.app/",
+  // },
 ];
 
 // Project cards
