@@ -91,11 +91,11 @@ const projects: Project[] = [
     title: "Mega OX",
     description:
       "A modern twist on the classic Naughts and Crosses (Tic-Tac-Toe) game. The game features a macro board with 9 micro boards in each cell, creating a layered and strategic gameplay experience. Two players take turns selecting cells on the macro and micro boards, with the goal to win 3 micro boards in a row on the macro board.",
-    skills: ["JavaScript", "OOP", "React"],
+    skills: ["JavaScript", "OOP", "React", "Docker"],
     image: "/megaoxpic1.png",
     imageOne: "/megaoxpic1.png",
     imageTwo: "/megaoxpic2.png",
-    currentState: "Beta - Deployed",
+    currentState: "V 1.2 Beta - Deployed",
     featuresInDevelopment: ["User Profiles", "Network Play"],
     plannedFeatures: [
       "Ladders",
@@ -105,7 +105,7 @@ const projects: Project[] = [
     ],
     knownBugs: "N/A",
     versionHistory: {
-      label: "V 1.1.0 - View Changelog",
+      label: "V 1.2.0 - View Changelog",
       url: "https://docs.google.com/document/d/1ItdRho5sCXa5rDfcBwENUHvwSCQrPYe-gKicPalCIdM/edit?usp=sharing",
     },
     repoLink: "https://github.com/AJHemmings/MEGA-OX",
