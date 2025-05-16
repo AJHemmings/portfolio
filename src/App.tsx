@@ -13,20 +13,14 @@ import { Analytics } from "@vercel/analytics/react";
 
 const App: React.FC = () => {
   useEffect(() => {
-    // Set dark mode by default
     document.documentElement.classList.add("dark");
   }, []);
 
   return (
-    // Main container for the entire application
     <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-      {/* Navbar component */}
       <Navbar />
-      {/* Dark mode toggle component */}
       <DarkModeToggle />
-      {/* Main content container */}
       <div className="space-y-20">
-        {/* Individual section components */}
         <Home />
         <About />
         <Skills />

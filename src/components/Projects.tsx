@@ -148,7 +148,7 @@ const projects: Project[] = [
   //     "Comment sections",
   //   ],
   //   knownBugs:
-  //     "Database is currently offline | CSS scrolling on sides refreshes everytime a character is typed on the keyboard",
+  //     "Database is currently offline | CSS scrolling on sides refreshes every time a character is typed on the keyboard",
   //   versionHistory: null,
   //   repoLink: "https://github.com/AJHemmings/Movie-Recommendation-Library",
   //   deployedLink: "https://movie-recommendation-library.vercel.app/",
