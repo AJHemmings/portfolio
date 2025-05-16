@@ -66,8 +66,7 @@ const About: React.FC = () => {
               lives and a passion for problem-solving.
             </p>
             <p className="text-lg">
-              With experience in customer service, telecom engineering, and CAD
-              space planning, I’ve developed strong analytical thinking and
+              With experience in Customer Service, Telecom Network Engineering, and Computer Aided Design, I’ve developed strong analytical thinking and
               adaptability—skills that seamlessly translate into coding. I’m
               currently honing my full-stack development skills, with hands-on
               experience in JavaScript, TypeScript, React, databases, DevOps,
