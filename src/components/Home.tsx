@@ -7,6 +7,8 @@ const Home = () => {
     "Back-End Developer",
     "Software Engineer",
     "Data Engineer",
+    "Systems Thinker",
+    "Dog Dad",
   ];
 
   const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
