@@ -111,7 +111,7 @@ const projects: Project[] = [
     ],
     knownBugs: "N/A",
     versionHistory: {
-      label: "V 1.3.0 - View Changelog",
+      label: "V 1.3.2 - View Changelog",
       url: "https://docs.google.com/document/d/1ItdRho5sCXa5rDfcBwENUHvwSCQrPYe-gKicPalCIdM/edit?usp=sharing",
     },
     repoLink: "https://github.com/AJHemmings/MEGA-OX",
