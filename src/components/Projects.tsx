@@ -34,7 +34,7 @@ const projects: Project[] = [
       "Novari is a platform designed to make personal growth accessible, interactive and community-driven.",
     skills: [
       "React",
-      "Node.js",
+      "Next.js",
       "TypeScript",
       "DevOps",
       "Tailwind-CSS",
