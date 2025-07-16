@@ -97,7 +97,7 @@ const projects: Project[] = [
     image: "/megaox1.png",
     imageOne: "/megaox2.png",
     imageTwo: "/megaox3.png",
-    currentState: "V 1.3.0",
+    currentState: "V 1.3.3",
     featuresInDevelopment: [
       "User Profiles",
       "Network Play",
@@ -111,7 +111,7 @@ const projects: Project[] = [
     ],
     knownBugs: "N/A",
     versionHistory: {
-      label: "V 1.3.2 - View Changelog",
+      label: "V 1.3.3 - View Changelog",
       url: "https://docs.google.com/document/d/1ItdRho5sCXa5rDfcBwENUHvwSCQrPYe-gKicPalCIdM/edit?usp=sharing",
     },
     repoLink: "https://github.com/AJHemmings/MEGA-OX",
