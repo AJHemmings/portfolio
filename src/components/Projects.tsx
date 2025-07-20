@@ -49,10 +49,11 @@ const projects: Project[] = [
     currentState:
       "In developement : please sign up OR sign in with email - guest@demo.com | password - demopassword1234 ",
     featuresInDevelopment: [
-      "Interactive dashboards and analytics",
+      "Direct Messaging",
       "Gamification enhancements",
     ],
     plannedFeatures: [
+      "Interactive dashboards and analytics",
       "RAG - Vector database",
       "Profile Customization options",
       "More ember task options",
