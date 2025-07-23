@@ -34,7 +34,7 @@ const projects: Project[] = [
       "Novari is a platform designed to make personal growth accessible, interactive and community-driven.",
     skills: [
       "React",
-      "Node.js",
+      "Next.js",
       "TypeScript",
       "DevOps",
       "Tailwind-CSS",
@@ -49,10 +49,11 @@ const projects: Project[] = [
     currentState:
       "In developement : please sign up OR sign in with email - guest@demo.com | password - demopassword1234 ",
     featuresInDevelopment: [
-      "Interactive dashboards and analytics",
+      "Direct Messaging",
       "Gamification enhancements",
     ],
     plannedFeatures: [
+      "Interactive dashboards and analytics",
       "RAG - Vector database",
       "Profile Customization options",
       "More ember task options",
@@ -93,11 +94,11 @@ const projects: Project[] = [
     title: "Mega OX",
     description:
       "A modern twist on the classic Naughts and Crosses (Tic-Tac-Toe) game. The game features a macro board with 9 micro boards in each cell, creating a layered and strategic gameplay experience. Two players take turns selecting cells on the macro and micro boards, with the goal to win 3 micro boards in a row on the macro board.",
-    skills: ["JavaScript", "OOP", "React", "Docker", "CI/CD"],
+    skills: ["TypeScript", "OOP", "React", "Docker", "CI/CD"],
     image: "/megaox1.png",
     imageOne: "/megaox2.png",
     imageTwo: "/megaox3.png",
-    currentState: "V 1.3.0",
+    currentState: "V 1.3.3",
     featuresInDevelopment: [
       "User Profiles",
       "Network Play",
@@ -111,7 +112,7 @@ const projects: Project[] = [
     ],
     knownBugs: "N/A",
     versionHistory: {
-      label: "V 1.3.0 - View Changelog",
+      label: "V 1.3.3 - View Changelog",
       url: "https://docs.google.com/document/d/1ItdRho5sCXa5rDfcBwENUHvwSCQrPYe-gKicPalCIdM/edit?usp=sharing",
     },
     repoLink: "https://github.com/AJHemmings/MEGA-OX",

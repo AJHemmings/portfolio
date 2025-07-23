@@ -25,7 +25,7 @@ const DarkModeToggle: React.FC = () => {
       className="fixed top-20 right-4 p-2 rounded-full bg-gray-200 dark:bg-gray-800 z-50"
       aria-label="Toggle dark mode"
     >
-      {isDarkMode ? "🌞" : "🌙"}
+      {isDarkMode ? "🌞" : "🌒"}
     </button>
   )
 }
