@@ -123,7 +123,7 @@ const projects: Project[] = [
     title: "Learning Material Content",
     description:
       "JavaScript OOP Learning Material – A concise guide showcasing advanced Object-Oriented Programming concepts, designed to demonstrate clear articulation and deep understanding of JavaScript’s powerful OOP capabilities.",
-    skills: ["JavaScript", "OOP", "Content Creation", "Canva", "YouTube"],
+    skills: ["JavaScript", "OOP", "Content Creation", "Canva", "Adobe Premier Pro", "YouTube"],
     image: "/oop in js.png",
     imageOne: "/oop-ceo.png",
     imageTwo: "/oop-in-js-1.png",
