@@ -98,7 +98,7 @@ const projects: Project[] = [
     image: "/megaox1.png",
     imageOne: "/megaox2.png",
     imageTwo: "/megaox3.png",
-    currentState: "V 1.3.3",
+    currentState: "In Development V 1.3.3",
     featuresInDevelopment: [
       "User Profiles",
       "Network Play",
