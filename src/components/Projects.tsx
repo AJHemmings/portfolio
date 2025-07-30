@@ -59,7 +59,10 @@ const projects: Project[] = [
       "More ember task options",
     ],
     knownBugs: "N/A",
-    versionHistory: null,
+    versionHistory: {
+      label: "V 1.0.0 - View Changelog",
+      url: "https://docs.google.com/document/d/175JyxLvE5dpMrBYZSmhykMk8NyXi1GH_7bxAqh49mQs/edit?usp=sharing",
+    },
     repoLink: "https://github.com/AJHemmings/Novari",
     deployedLink:
       "https://novari-git-main-adams-projects-ff804fb2.vercel.app/auth/signin",
