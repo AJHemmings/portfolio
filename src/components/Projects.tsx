@@ -72,7 +72,7 @@ const projects: Project[] = [
     title: "Recipe Book Web App",
     description:
       "Recipe Book Web App – A React-based project leveraging a JSON server for efficient development, enabling students to find and create budget-friendly meals. Demonstrates proficiency in React, JSON, and full-stack development for practical, real-world solutions.",
-    skills: ["React", "JSON", "JavaScript", "Node.js"],
+    skills: ["React", "JSON", "JavaScript", "Node.js", "Vite"],
     image: "/react app web app.png",
     imageOne: "/recipe-card.png",
     imageTwo: "/recipe-card-instructions.png",
