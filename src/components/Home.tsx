@@ -3,12 +3,9 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const Home = () => {
   const titles = [
-    "Full Stack Developer",
-    "Back-End Developer",
-    "Software Engineer",
-    "Data Engineer",
-    "Systems Thinker",
     "Dog Dad",
+    "Full Stack Developer",
+    "Systems Thinker",
   ];
 
   const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
