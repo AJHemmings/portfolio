@@ -19,7 +19,7 @@ const Home = () => {
   }, [titles.length]);
 
   // Show 'Junior' for all except 'Dog Dad'
-  const showJunior = currentTitleIndex !== 5;
+  const showJunior = currentTitleIndex !== 0;
 
   return (
     <section className="min-h-screen flex flex-col justify-center items-center text-center p-8">
