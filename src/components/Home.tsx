@@ -61,7 +61,7 @@ const Home = () => {
             </motion.div>
           </AnimatePresence>
 
-          <p>Building with Purpose</p>
+          <AnimatePresence mode="wait"> {currentTitleIndex !== 0 && ( <motion.p key="purpose" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }} > Building with Purpose </motion.p> )} </AnimatePresence>
         </div>
       </div>
     </section>
