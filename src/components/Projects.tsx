@@ -95,7 +95,7 @@ const projects: Project[] = [
     id: 4,
     title: "Mega OX",
     description:
-      "A modern twist on the classic Naughts and Crosses (Tic-Tac-Toe) game. The game features a macro board with 9 micro boards in each cell, creating a layered and strategic gameplay experience. Two players take turns selecting cells on the macro and micro boards, with the goal to win 3 micro boards in a row on the macro board.",
+      "A modern twist on the classic Naughts and Crosses (Tic-Tac-Toe) game. The game features a macro board with 9 micro boards in each cell, creating a layered and strategic gameplay experience.",
     skills: ["TypeScript", "OOP", "React", "Docker", "CI/CD"],
     image: "/megaox1.png",
     imageOne: "/megaox2.png",
