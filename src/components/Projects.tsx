@@ -73,9 +73,9 @@ const projects: Project[] = [
     description:
       "A website for the band Dam Anna. Main design feature is a 3D guitar model imported from blender and animated with Three.js",
     skills: ["React", "Three.js", "JavaScript", "Node.js", "Vite", "TailwindCSS", "Blender"],
-    image: "/react app web app.png",
-    imageOne: "/recipe-card.png",
-    imageTwo: "/recipe-card-instructions.png",
+    image: "/dam-anna-logo.png",
+    imageOne: "/dam-anna-logo1.png",
+    imageTwo: "/dam-anna-logo2.png",
     currentState: "Dev",
     featuresInDevelopment: ["Mobile Compatability", "Admin Dashboard"],
     plannedFeatures: [
