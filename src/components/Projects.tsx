@@ -83,7 +83,7 @@ const projects: Project[] = [
       "Videos",
       "Mailing List",
     ],
-    knownBugs: "Mobile devices are not supported | Minor UI jolt when opening and closing About Us Modal",
+    knownBugs: ["Mobile devices are not supported", "Minor UI jolt when opening and closing About Us Modal"],
     versionHistory: {
       label: "V 1.0",
       url: "",
