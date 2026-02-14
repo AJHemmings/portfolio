@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const Home = () => {
   const titles = [
     "Dog Dad",
-    "Full Stack Developer",
+    "Developer",
     "Systems Thinker",
   ];
 
