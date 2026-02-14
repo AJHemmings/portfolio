@@ -71,7 +71,7 @@ const About: React.FC = () => {
             Design
           </span>{" "}
           has equipped me with strong analytical thinking and rapid
-          adaptability—skills I now apply to building{" "}
+          adaptability skills I now apply to building{" "}
           <span className="font-semibold text-blue-600 dark:text-blue-400">
             impactful software solutions
           </span>
@@ -96,7 +96,7 @@ const About: React.FC = () => {
             quickly adapt
           </span>
           —whether mastering new technologies or solving multidimensional
-          problems—by combining structured learning frameworks with creative
+          problems by combining structured learning frameworks with creative
           execution.
         </>
       ),
@@ -105,7 +105,7 @@ const About: React.FC = () => {
       text: (
         <>
           When I'm not coding, you can find me exploring nature trails with Yuna
-          (my dog), cultivating mushrooms, playing guitar, or feeding my endless
+          (my dog), cultivating mushrooms, playing with my band "Dam Anna", or feeding my endless
           curiosity about how things work.
         </>
       ),
