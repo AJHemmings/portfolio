@@ -95,7 +95,7 @@ const About: React.FC = () => {
           <span className="font-semibold text-blue-600 dark:text-blue-400">
             quickly adapt
           </span>
-          —whether mastering new technologies or solving multidimensional
+          whether mastering new technologies or solving multidimensional
           problems by combining structured learning frameworks with creative
           execution.
         </>
