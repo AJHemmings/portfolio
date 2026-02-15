@@ -8,19 +8,29 @@ const images = [
   { src: "/me.jpg", alt: "Image 4" },
 ];
 
-const Slideshow: React.FC = () => {
+interface SlideshowProps {
+  size?: string;          
+  shape?: string;         
+  className?: string;     
+}
+
+const Slideshow: React.FC<SlideshowProps> = ({
+  size = "w-64 h-64",
+  shape = "rounded-4xl",
+  className = "shadow-xl",
+}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000); // Change image every 3 seconds
+    }, 3000);
 
-    return () => clearInterval(interval); // Cleanup interval on unmount
+    return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="relative w-64 h-64">
+    <div className={`relative ${size} ${className}`}>
       {images.map((image, index) => (
         <div
           key={index}
@@ -31,9 +41,8 @@ const Slideshow: React.FC = () => {
           <Image
             src={image.src}
             alt={image.alt}
-            width={300}
-            height={300}
-            className="rounded-full object-cover w-full h-full"
+            fill
+            className={`${shape} object-cover`}
           />
         </div>
       ))}
@@ -78,7 +87,7 @@ const About: React.FC = () => {
           . Through intensive training at the School of Code bootcamp, I've
           developed professional-grade skills in{" "}
           <span className="font-medium">
-            JavaScript, TypeScript, React, databases, DevOps, and UI/UX
+            JavaScript, Python, React, databases, DevOps, and UI/UX
             principles
           </span>
           .
