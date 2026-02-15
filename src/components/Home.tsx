@@ -13,41 +13,19 @@ const Home = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTitleIndex((prev) => (prev + 1) % titles.length);
-    }, 2000); // Change text every 2 seconds (adjust as needed)
+    }, 2000);
 
     return () => clearInterval(interval);
   }, [titles.length]);
 
-  // Show 'Junior' for all except 'Dog Dad'
-  const showJunior = currentTitleIndex !== 0;
-
   return (
     <section className="min-h-screen flex flex-col justify-center items-center text-center p-8">
       <div className="space-y-8">
-        <h1 className="text-6xl md:text-8xl font-bold mb-4">Adam Hemmings</h1>
+        <h1 className="text-6xl md:text-8xl font-bold mb-4">
+          Adam Hemmings
+        </h1>
 
         <div className="text-2xl md:text-3xl">
-          {/* Reserve space for 'Junior' so layout doesn't shift */}
-          <div
-            style={{ height: "2.5rem" }}
-            className="flex items-center justify-center"
-          >
-            <AnimatePresence mode="wait">
-              {showJunior && (
-                <motion.p
-                  key="junior"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.3 }}
-                  className="mb-0 absolute left-0 right-0"
-                >
-                  Junior
-                </motion.p>
-              )}
-            </AnimatePresence>
-          </div>
-
           <AnimatePresence mode="wait">
             <motion.div
               key={currentTitleIndex}
@@ -61,7 +39,19 @@ const Home = () => {
             </motion.div>
           </AnimatePresence>
 
-          <AnimatePresence mode="wait"> {currentTitleIndex !== 0 && ( <motion.p key="purpose" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }} > Building with Purpose </motion.p> )} </AnimatePresence>
+          <AnimatePresence mode="wait">
+            {currentTitleIndex !== 0 && (
+              <motion.p
+                key="purpose"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+              >
+                Building with Purpose
+              </motion.p>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </section>
