@@ -72,7 +72,7 @@ const projects: Project[] = [
     title: "Dam Anna (band website)",
     description:
       "A website for the band Dam Anna. Main design feature is a 3D guitar model imported from blender and animated with Three.js. Optimized for mobile devices and desktop.",
-    skills: ["React", "Three.js", "JavaScript", "Node.js", "Vite", "TailwindCSS", "Blender"],
+    skills: ["React", "Three.js", "JavaScript", "Node.js", "Vite", "TailwindCSS", "PostgreSQL", "Vercel", "Supabase", "Blender"],
     image: "/dam-anna-logo.jpg",
     imageOne: "/dam-anna-logo2.jpg",
     imageTwo: "/damannadash.jpg",
