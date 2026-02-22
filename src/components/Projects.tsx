@@ -73,7 +73,7 @@ export const projects: Project[] = [
     id: 2,
     title: "Dam Anna (band website)",
     description:
-      "A website for the band Dam Anna. Main design feature is a 3D guitar model imported from blender and animated with Three.js. Admin dashboard designed for non technical band mates to contribute and change content. User photo-submissions go to admin review panel. Optimized for mobile devices and desktop.",
+      "A website for the band Dam Anna. 3D guitar model imported from blender and animated with Three.js. Admin dashboard designed for non technical band mates to contribute and change content. User photo-submissions go to admin review panel. Optimized for mobile devices and desktop.",
     skills: [
       "React",
       "Three.js",
