@@ -1,32 +1,23 @@
 "use client";
 
 import type React from "react";
-import { useState, useEffect } from "react";
 import { GitlabIcon as GitHub, Linkedin } from "lucide-react";
 
-const Navbar: React.FC = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+interface NavbarProps {
+  activeIndex: number;
+  onNavigate: (index: number) => void;
+}
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const scrollToSection = (sectionId: string) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+const Navbar: React.FC<NavbarProps> = ({ activeIndex, onNavigate }) => {
+  const items = ["Home", "About", "Skills", "Projects", "Contact"];
+  const isScrolled = activeIndex > 0;
 
   return (
     <nav
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white dark:bg-gray-900 shadow-md" : "bg-transparent"
+      className={`sticky top-0 z-50 transition-all duration-300 backdrop-blur ${
+        isScrolled
+          ? "bg-white/80 dark:bg-[#0f1116]/85 shadow-lg border-b border-black/5 dark:border-white/10"
+          : "bg-white/40 dark:bg-[#0f1116]/45 border-b border-transparent"
       }`}
     >
       <div className="container mx-auto px-6 py-3">
@@ -50,10 +41,10 @@ const Navbar: React.FC = () => {
             </a>
           </div>
           <div className="space-x-4">
-            {["Home", "About", "Skills", "Projects", "Contact"].map((item) => (
+            {items.map((item, index) => (
               <button
                 key={item}
-                onClick={() => scrollToSection(item.toLowerCase())}
+                onClick={() => onNavigate(index)}
                 className="text-gray-800 dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-400"
               >
                 {item}

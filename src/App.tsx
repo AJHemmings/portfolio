@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useEffect } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Navbar from "./components/Navbar";
 import DarkModeToggle from "./components/DarkModeToggle";
 import Home from "./components/Home";
@@ -12,21 +12,141 @@ import Contact from "./components/Contact";
 import { Analytics } from "@vercel/analytics/react";
 
 const App: React.FC = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isAboutLocked, setIsAboutLocked] = useState(false);
+  const [aboutNavState, setAboutNavState] = useState({
+    atStart: true,
+    atEnd: false,
+  });
+  const [parallaxOffset, setParallaxOffset] = useState({ x: 0, y: 0 });
+  const aboutExitRef = useRef<{ direction: number; time: number } | null>(null);
+  const lastWheelTimeRef = useRef(0);
+  const sections = useMemo(
+    () => ["home", "about", "skills", "projects", "contact"],
+    [],
+  );
+
   useEffect(() => {
     document.documentElement.classList.add("dark");
   }, []);
 
+  useEffect(() => {
+    const handleMouseMove = (event: MouseEvent) => {
+      const x = (event.clientX / window.innerWidth - 0.5) * 18;
+      const y = (event.clientY / window.innerHeight - 0.5) * 10;
+      setParallaxOffset({ x, y });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  useEffect(() => {
+    if (activeIndex !== 1 || (!aboutNavState.atStart && !aboutNavState.atEnd)) {
+      aboutExitRef.current = null;
+    }
+  }, [activeIndex, aboutNavState]);
+
+  const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
+    if (document.body.dataset.modalOpen === "true") {
+      event.preventDefault();
+      return;
+    }
+    const dominantDelta =
+      Math.abs(event.deltaX) > Math.abs(event.deltaY)
+        ? event.deltaX
+        : event.deltaY;
+
+    if (dominantDelta === 0) return;
+
+    const direction = dominantDelta > 0 ? 1 : -1;
+
+    if (activeIndex === 1) {
+      const canExit =
+        (direction > 0 && aboutNavState.atEnd) ||
+        (direction < 0 && aboutNavState.atStart);
+
+      if (!canExit) {
+        aboutExitRef.current = null;
+        event.preventDefault();
+        return;
+      }
+
+      const now = Date.now();
+      const armed = aboutExitRef.current;
+      if (!armed || armed.direction !== direction || now - armed.time > 900) {
+        aboutExitRef.current = { direction, time: now };
+        event.preventDefault();
+        return;
+      }
+
+      aboutExitRef.current = null;
+    }
+
+    if (isAboutLocked) {
+      event.preventDefault();
+      return;
+    }
+
+    event.preventDefault();
+
+    const now = Date.now();
+    if (now - lastWheelTimeRef.current < 1100) {
+      return;
+    }
+    lastWheelTimeRef.current = now;
+
+    setActiveIndex((prev) => {
+      const nextIndex = dominantDelta > 0 ? prev + 1 : prev - 1;
+      return Math.min(Math.max(nextIndex, 0), sections.length - 1);
+    });
+  };
+
+  const handleNavigate = (index: number) => {
+    setActiveIndex(Math.min(Math.max(index, 0), sections.length - 1));
+  };
+
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-      <Navbar />
-      <DarkModeToggle />
-      <div className="space-y-20">
-        <Home />
-        <About />
-        <Skills />
-        <Projects />
-        <Contact />
+    <div
+      className="min-h-screen text-gray-900 dark:text-gray-100"
+      onWheel={handleWheel}
+    >
+      <div className="parallax-layer" aria-hidden="true">
+        <div className="parallax-base" />
+        <div
+          className="parallax-mid"
+          style={{
+            transform: `translate3d(${parallaxOffset.x}px, ${parallaxOffset.y}px, 0)`,
+          }}
+        />
       </div>
+      <Navbar activeIndex={activeIndex} onNavigate={handleNavigate} />
+      <DarkModeToggle />
+      <div
+        className="slider-rail"
+        style={{ transform: `translateX(-${activeIndex * 100}vw)` }}
+      >
+        <div className="slider-panel">
+          <Home />
+        </div>
+        <div className="slider-panel">
+          <About
+            isActive={activeIndex === 1}
+            onLockChange={setIsAboutLocked}
+            onNavStateChange={setAboutNavState}
+          />
+        </div>
+        <div className="slider-panel">
+          <Skills />
+        </div>
+        <div className="slider-panel">
+          <Projects />
+        </div>
+        <div className="slider-panel">
+          <Contact onBackToTop={() => handleNavigate(0)} />
+        </div>
+      </div>
+      <Analytics />
     </div>
   );
 };

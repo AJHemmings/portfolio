@@ -9,15 +9,13 @@ const images = [
 ];
 
 interface SlideshowProps {
-  size?: string;          
-  shape?: string;         
-  className?: string;     
+  className?: string;
+  shape?: string;
 }
 
 const Slideshow: React.FC<SlideshowProps> = ({
-  size = "w-64 h-64",
-  shape = "rounded-4xl",
-  className = "shadow-xl",
+  className = "",
+  shape = "rounded-[28px]",
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -30,7 +28,7 @@ const Slideshow: React.FC<SlideshowProps> = ({
   }, []);
 
   return (
-    <div className={`relative ${size} ${className}`}>
+    <div className={`absolute inset-0 h-full w-full ${className}`}>
       {images.map((image, index) => (
         <div
           key={index}
@@ -42,6 +40,7 @@ const Slideshow: React.FC<SlideshowProps> = ({
             src={image.src}
             alt={image.alt}
             fill
+            sizes="(min-width: 1024px) 420px, (min-width: 640px) 360px, 300px"
             className={`${shape} object-cover`}
           />
         </div>
@@ -50,10 +49,20 @@ const Slideshow: React.FC<SlideshowProps> = ({
   );
 };
 
-const About: React.FC = () => {
+interface AboutProps {
+  isActive: boolean;
+  onLockChange?: (isLocked: boolean) => void;
+  onNavStateChange?: (state: { atStart: boolean; atEnd: boolean }) => void;
+}
+
+const About: React.FC<AboutProps> = ({
+  isActive,
+  onLockChange,
+  onNavStateChange,
+}) => {
   const [currentParagraph, setCurrentParagraph] = useState(0);
-  const [isScrollLocked, setIsScrollLocked] = useState(false);
-  const aboutRef = useRef<HTMLElement>(null);
+  const lastWheelTimeRef = useRef(0);
+  const activationTimeRef = useRef(0);
 
   const paragraphs = [
     {
@@ -79,16 +88,15 @@ const About: React.FC = () => {
             Customer Service, Telecom Network Engineering, and Computer Aided
             Design
           </span>{" "}
-          has equipped me with strong analytical thinking and rapid
-          adaptability skills I now apply to building{" "}
+          has equipped me with strong analytical thinking and rapid adaptability
+          skills I now apply to building{" "}
           <span className="font-semibold text-blue-600 dark:text-blue-400">
             impactful software solutions
           </span>
           . Through intensive training at the School of Code bootcamp, I've
           developed professional-grade skills in{" "}
           <span className="font-medium">
-            JavaScript, Python, React, databases, DevOps, and UI/UX
-            principles
+            JavaScript, Python, React, databases, DevOps, and UI/UX principles
           </span>
           .
         </>
@@ -114,8 +122,8 @@ const About: React.FC = () => {
       text: (
         <>
           When I'm not coding, you can find me exploring nature trails with Yuna
-          (my dog), cultivating mushrooms, playing with my band "Dam Anna", or feeding my endless
-          curiosity about how things work.
+          (my dog), cultivating mushrooms, playing with my band "Dam Anna", or
+          feeding my endless curiosity about how things work.
         </>
       ),
       isPersonal: true,
@@ -128,188 +136,106 @@ const About: React.FC = () => {
 
   const prevParagraph = () => {
     setCurrentParagraph(
-      (prev) => (prev - 1 + paragraphs.length) % paragraphs.length
+      (prev) => (prev - 1 + paragraphs.length) % paragraphs.length,
     );
   };
 
   useEffect(() => {
-    let scrollTimeout: NodeJS.Timeout;
+    const isAtStart = currentParagraph === 0;
+    const isAtEnd = currentParagraph === paragraphs.length - 1;
+    const shouldLock = isActive && !(isAtStart || isAtEnd);
+    onLockChange?.(shouldLock);
+    onNavStateChange?.({ atStart: isAtStart, atEnd: isAtEnd });
+  }, [
+    currentParagraph,
+    isActive,
+    onLockChange,
+    onNavStateChange,
+    paragraphs.length,
+  ]);
 
-    const handleWheel = (e: WheelEvent) => {
-      if (!aboutRef.current) return;
-
-      const aboutSection = aboutRef.current;
-      const rect = aboutSection.getBoundingClientRect();
-      const isInView =
-        rect.top <= window.innerHeight * 0.3 &&
-        rect.bottom >= window.innerHeight * 0.7;
-
-      // Only intercept scroll when the about section is prominently in view
-      if (isInView) {
-        // Check if we're at the beginning and scrolling up, or at the end and scrolling down
-        const isAtStart = currentParagraph === 0;
-        const isAtEnd = currentParagraph === paragraphs.length - 1;
-
-        if ((isAtStart && e.deltaY < 0) || (isAtEnd && e.deltaY > 0)) {
-          // Allow normal page scrolling when at boundaries
-          setIsScrollLocked(false);
-          return;
-        }
-
-        // Prevent default scrolling and handle paragraph navigation
-        e.preventDefault();
-        setIsScrollLocked(true);
-
-        // Clear existing timeout
-        clearTimeout(scrollTimeout);
-
-        // Debounce scroll events to prevent rapid firing
-        scrollTimeout = setTimeout(() => {
-          if (e.deltaY > 0) {
-            nextParagraph();
-          } else {
-            prevParagraph();
-          }
-        }, 100);
-      } else {
-        setIsScrollLocked(false);
-      }
-    };
-
-    // Intersection Observer to detect when About section is in view
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) {
-            setIsScrollLocked(false);
-            setCurrentParagraph(0); // Reset to first paragraph when leaving
-          }
-        });
-      },
-      {
-        threshold: 0.3, // Trigger when 30% of the section is visible
-      }
-    );
-
-    if (aboutRef.current) {
-      observer.observe(aboutRef.current);
+  useEffect(() => {
+    if (isActive) {
+      activationTimeRef.current = Date.now();
     }
+  }, [isActive]);
 
-    // Add wheel listener to window
-    window.addEventListener("wheel", handleWheel, { passive: false });
+  useEffect(() => {
+    const handleWheel = (event: WheelEvent) => {
+      if (!isActive) return;
 
-    return () => {
-      window.removeEventListener("wheel", handleWheel);
-      observer.disconnect();
-      clearTimeout(scrollTimeout);
+      const isAtStart = currentParagraph === 0;
+      const isAtEnd = currentParagraph === paragraphs.length - 1;
+
+      const dominantDelta =
+        Math.abs(event.deltaX) > Math.abs(event.deltaY)
+          ? event.deltaX
+          : event.deltaY;
+
+      if (dominantDelta === 0) return;
+
+      if (Date.now() - activationTimeRef.current < 400) return;
+
+      if (dominantDelta > 0 && isAtEnd) return;
+      if (dominantDelta < 0 && isAtStart) return;
+
+      event.preventDefault();
+
+      const now = Date.now();
+      if (now - lastWheelTimeRef.current < 500) {
+        return;
+      }
+      lastWheelTimeRef.current = now;
+
+      if (dominantDelta > 0 && !isAtEnd) {
+        nextParagraph();
+        return;
+      }
+
+      if (dominantDelta < 0 && !isAtStart) {
+        prevParagraph();
+      }
     };
-  }, [currentParagraph]);
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    return () => window.removeEventListener("wheel", handleWheel);
+  }, [currentParagraph, isActive, paragraphs.length]);
 
   return (
-    // Main container for the about section
     <section
-      ref={aboutRef}
       id="about"
-      className="min-h-screen py-20 flex items-center relative"
+      className="relative min-h-screen py-24 md:py-32 overflow-hidden"
     >
-      {/* Scroll lock indicator */}
-      {isScrollLocked && (
-        <div className="fixed top-4 right-4 z-50 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium opacity-75">
-          About Navigation Active
-        </div>
-      )}
-
-      <div className="container mx-auto px-4">
-        {/* Section title */}
-        <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center animate-fade-in">
-          About Me
-        </h2>
-        {/* Flex container for image and text */}
-        <div className="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-12 animate-fade-in-up">
-          {/* Replace the static Image with the Slideshow component */}
-          <div className="transform transition-transform duration-300 hover:scale-105">
-            <Slideshow />
+      <div className="relative container mx-auto px-6">
+        <div className="grid gap-12 lg:grid-cols-[1.05fr_1fr] items-center">
+          <div className="relative">
+            <div className="relative w-full max-w-md aspect-[4/5] rounded-[28px] border border-black/5 dark:border-white/10 bg-white/70 dark:bg-white/5 shadow-2xl backdrop-blur overflow-hidden">
+              <Slideshow shape="rounded-[28px]" />
+            </div>
           </div>
-          {/* Text content with navigation */}
-          <div className="max-w-2xl relative">
-            {/* Invisible card container */}
-            <div className="relative h-80 overflow-hidden">
-              {/* Navigation arrows */}
-              <button
-                onClick={prevParagraph}
-                className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-12 z-10 p-2 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110 border border-gray-200 dark:border-gray-600"
-                aria-label="Previous paragraph"
+
+          <div className="max-w-xl">
+            <p className="text-xs uppercase tracking-[0.4em] text-muted-foreground">
+              About
+            </p>
+            <h2 className="mt-3 font-display text-4xl md:text-5xl tracking-tight">
+              About Me
+            </h2>
+
+            <div className="mt-8 min-h-[320px] md:min-h-[360px] rounded-2xl border border-black/5 dark:border-white/10 bg-white/80 dark:bg-white/5 p-7 md:p-9 shadow-xl backdrop-blur">
+              <p
+                key={currentParagraph}
+                className={`text-lg md:text-xl leading-relaxed animate-fade-in-up ${
+                  paragraphs[currentParagraph].isPersonal
+                    ? "text-gray-700 dark:text-gray-300 italic"
+                    : "text-gray-800/90 dark:text-gray-100/90"
+                }`}
               >
-                <svg
-                  className="w-5 h-5 text-gray-600 dark:text-gray-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 19l-7-7 7-7"
-                  />
-                </svg>
-              </button>
-
-              <button
-                onClick={nextParagraph}
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-12 z-10 p-2 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110 border border-gray-200 dark:border-gray-600"
-                aria-label="Next paragraph"
-              >
-                <svg
-                  className="w-5 h-5 text-gray-600 dark:text-gray-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </button>
-
-              {/* Paragraph content */}
-              <div className="relative w-full h-full flex items-center">
-                <p
-                  className={`text-lg leading-relaxed transition-all duration-500 transform ${
-                    paragraphs[currentParagraph].isPersonal
-                      ? "text-gray-700 dark:text-gray-300 italic"
-                      : ""
-                  } opacity-100 translate-x-0`}
-                >
-                  {paragraphs[currentParagraph].text}
-                </p>
-              </div>
+                {paragraphs[currentParagraph].text}
+              </p>
             </div>
-
-            {/* Paragraph indicators */}
-            <div className="flex justify-center mt-6 space-x-2">
-              {paragraphs.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentParagraph(index)}
-                  className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                    index === currentParagraph
-                      ? "bg-blue-600 dark:bg-blue-400 w-6"
-                      : "bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
-                  }`}
-                  aria-label={`Go to paragraph ${index + 1}`}
-                />
-              ))}
-            </div>
-
-            {/* Dynamic scroll hint */}
-            <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-4">
-              {isScrollLocked
-                ? "Continue scrolling to navigate paragraphs"
-                : "Scroll here to explore my story"}
+            <p className="mt-5 text-sm text-muted-foreground">
+              Scroll on the card to move through the story.
             </p>
           </div>
         </div>

@@ -26,10 +26,7 @@ const skills = [
 const Skills: React.FC = () => {
   return (
     // Main container for the skills section
-    <section
-      id="skills"
-      className="min-h-screen py-20 bg-gray-100 dark:bg-gray-800"
-    >
+    <section id="skills" className="min-h-screen py-20">
       <div className="container mx-auto px-4">
         {/* Section title */}
         <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">
@@ -41,7 +38,7 @@ const Skills: React.FC = () => {
           {skills.map((skill) => (
             <div
               key={skill.name}
-              className="flex flex-col items-center p-4 bg-white dark:bg-gray-700 rounded-lg shadow-md"
+              className="flex flex-col items-center p-4 bg-white/90 dark:bg-gray-900/70 rounded-lg border border-black/5 dark:border-white/10 shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-black/5 dark:hover:bg-white/10 hover:shadow-lg"
             >
               {/* Skill icon */}
               <Image

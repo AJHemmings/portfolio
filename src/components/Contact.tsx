@@ -2,7 +2,11 @@
 
 import { useState, ChangeEvent, useEffect } from "react";
 
-const Contact: React.FC = () => {
+interface ContactProps {
+  onBackToTop?: () => void;
+}
+
+const Contact: React.FC<ContactProps> = ({ onBackToTop }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -16,7 +20,7 @@ const Contact: React.FC = () => {
 
   // Handle form input changes
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -68,7 +72,7 @@ const Contact: React.FC = () => {
     } catch (err) {
       console.error("Error sending message:", err); // Log the error
       setError(
-        "An error occurred while sending your message. Please try again."
+        "An error occurred while sending your message. Please try again.",
       );
     } finally {
       setIsSubmitting(false);
@@ -77,18 +81,12 @@ const Contact: React.FC = () => {
 
   // Function to scroll to the top of the page
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    onBackToTop?.();
   };
 
   return (
     // Main container for the contact section
-    <section
-      id="contact"
-      className="min-h-screen py-20 bg-gray-100 dark:bg-gray-800"
-    >
+    <section id="contact" className="min-h-screen py-20">
       <div className="container mx-auto px-4">
         {/* Section title */}
         <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">

@@ -1,11 +1,12 @@
 "use client";
 
 import type React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import { createPortal } from "react-dom";
 
 // Interface for project data structure
-interface Project {
+export interface Project {
   id: number;
   title: string;
   description: string;
@@ -13,6 +14,8 @@ interface Project {
   image: string;
   imageOne: string;
   imageTwo: string;
+  imageThree?: string;
+  imageFour?: string;
   currentState: string;
   featuresInDevelopment: string[];
   plannedFeatures: string[];
@@ -26,7 +29,7 @@ interface Project {
 }
 
 // Array of project data
-const projects: Project[] = [
+export const projects: Project[] = [
   {
     id: 1,
     title: "Novari",
@@ -46,12 +49,11 @@ const projects: Project[] = [
     image: "/novari home.png",
     imageOne: "/novari-community.png",
     imageTwo: "/user-profile.png",
+    imageThree: "/novari home.png",
+    imageFour: "/novari-community.png",
     currentState:
       "In developement : please sign up OR sign in with email - guest@demo.com | password - demopassword1234 ",
-    featuresInDevelopment: [
-      "Direct Messaging",
-      "Gamification enhancements",
-    ],
+    featuresInDevelopment: ["Direct Messaging", "Gamification enhancements"],
     plannedFeatures: [
       "Interactive dashboards and analytics",
       "RAG - Vector database",
@@ -72,10 +74,23 @@ const projects: Project[] = [
     title: "Dam Anna (band website)",
     description:
       "A website for the band Dam Anna. Main design feature is a 3D guitar model imported from blender and animated with Three.js. Optimized for mobile devices and desktop.",
-    skills: ["React", "Three.js", "JavaScript", "Node.js", "Vite", "TailwindCSS", "PostgreSQL", "Vercel", "Supabase", "Blender"],
+    skills: [
+      "React",
+      "Three.js",
+      "JavaScript",
+      "Node.js",
+      "Vite",
+      "TailwindCSS",
+      "PostgreSQL",
+      "Vercel",
+      "Supabase",
+      "Blender",
+    ],
     image: "/dam-anna-logo.jpg",
     imageOne: "/dam-anna-logo2.jpg",
     imageTwo: "/damannadash.jpg",
+    imageThree: "/dam-anna-logo.jpg",
+    imageFour: "/dam-anna-logo2.jpg",
     currentState: "Release: 1.0",
     featuresInDevelopment: ["Mobile Optimization for the admin dashboard"],
     plannedFeatures: [
@@ -84,7 +99,7 @@ const projects: Project[] = [
       "Mailing List",
       "Social Media AI automation",
     ],
-    knownBugs: ["Minor UI jolt when opening and closing About Us Modal"],
+    knownBugs: "Minor UI jolt when opening and closing About Us Modal",
     versionHistory: {
       label: "",
       url: "",
@@ -101,6 +116,8 @@ const projects: Project[] = [
     image: "/megaox1.png",
     imageOne: "/megaox2.png",
     imageTwo: "/megaox3.png",
+    imageThree: "/megaox1.png",
+    imageFour: "/megaox2.png",
     currentState: "In Development V 1.3.3",
     featuresInDevelopment: [
       "User Profiles",
@@ -126,10 +143,19 @@ const projects: Project[] = [
     title: "Learning Material Content",
     description:
       "JavaScript OOP Learning Material – A concise guide showcasing advanced Object-Oriented Programming concepts, designed to demonstrate clear articulation and deep understanding of JavaScript’s powerful OOP capabilities.",
-    skills: ["JavaScript", "OOP", "Content Creation", "Canva", "Adobe Premier Pro", "YouTube"],
+    skills: [
+      "JavaScript",
+      "OOP",
+      "Content Creation",
+      "Canva",
+      "Adobe Premier Pro",
+      "YouTube",
+    ],
     image: "/oop in js.png",
     imageOne: "/oop-ceo.png",
     imageTwo: "/oop-in-js-1.png",
+    imageThree: "/oop in js.png",
+    imageFour: "/oop-ceo.png",
     currentState: "Released",
     featuresInDevelopment: ["New concept ideas", "Video editing"],
     plannedFeatures: ["More topics/concepts", "Move to Scrimba"],
@@ -173,24 +199,26 @@ const ProjectCard: React.FC<{ project: Project; onClick: () => void }> = ({
   return (
     <div
       onClick={onClick}
-      className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform hover:scale-105 w-96 h-[500px] flex flex-col"
+      className="group bg-white/90 dark:bg-gray-900/70 rounded-2xl border border-black/5 dark:border-white/10 shadow-lg overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-xl flex flex-col h-full"
     >
       {/* Project image */}
-      <div className="w-full h-48 overflow-hidden">
+      <div className="w-full h-40 overflow-hidden">
         <Image
           src={project.image || "/placeholder.svg"}
           alt={project.title}
           width={400}
           height={300}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
         />
       </div>
       {/* Project content */}
-      <div className="p-6 flex-1 flex flex-col">
+      <div className="p-5 flex-1 flex flex-col">
         {/* Project title */}
-        <h3 className="text-2xl font-semibold mb-3">{project.title}</h3>
+        <h3 className="text-xl font-semibold mb-2 tracking-tight">
+          {project.title}
+        </h3>
         {/* Project description */}
-        <p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">
+        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
           {project.description}
         </p>
         {/* Project skills */}
@@ -198,7 +226,7 @@ const ProjectCard: React.FC<{ project: Project; onClick: () => void }> = ({
           {project.skills.map((skill, index) => (
             <span
               key={index}
-              className="bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded-full text-sm"
+              className="bg-black/5 dark:bg-white/10 px-2.5 py-1 rounded-full text-xs uppercase tracking-wide cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:bg-black/15 dark:hover:bg-white/25 hover:text-black dark:hover:text-white hover:shadow-md"
             >
               {skill}
             </span>
@@ -221,9 +249,46 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
   onClose,
   onImageClick,
 }) => {
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-y-auto max-h-full w-full max-w-4xl">
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+    const previousModalFlag = document.body.dataset.modalOpen;
+
+    document.body.dataset.modalOpen = "true";
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+
+    return () => {
+      if (previousModalFlag === undefined) {
+        delete document.body.dataset.modalOpen;
+      } else {
+        document.body.dataset.modalOpen = previousModalFlag;
+      }
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+    };
+  }, [isMounted]);
+
+  if (!isMounted) {
+    return null;
+  }
+
+  const modalImages = [project.imageOne, project.imageTwo].map(
+    (image) => image || project.image || "/placeholder.svg",
+  );
+  // To enable images 3/4 later, add them to modalImages here.
+
+  return createPortal(
+    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-y-auto max-h-[90vh] w-full max-w-5xl">
         <div className="p-6">
           <button
             onClick={onClose}
@@ -245,36 +310,25 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
             </svg>
           </button>
 
-          <h2 className="text-center text-3xl font-bold mb-4">
+          <h2 className="text-center text-3xl font-bold mb-6">
             {project.title}
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <Image
-              src={project.imageOne || "/placeholder.svg"}
-              alt={project.title}
-              width={400}
-              height={300}
-              className="w-full h-64 object-cover rounded-lg"
-              onClick={() =>
-                onImageClick(project.imageOne || "/placeholder.svg")
-              }
-            />
-            <Image
-              src={project.imageTwo || "/placeholder.svg"}
-              alt={project.title}
-              width={400}
-              height={300}
-              className="w-full h-64 object-cover rounded-lg"
-              onClick={() =>
-                onImageClick(project.imageTwo || "/placeholder.svg")
-              }
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            {modalImages.map((image, index) => (
+              <Image
+                key={`${project.title}-${index}`}
+                src={image}
+                alt={`${project.title} ${index + 1}`}
+                width={520}
+                height={360}
+                className="w-full h-56 object-cover rounded-xl"
+                onClick={() => onImageClick(image)}
+              />
+            ))}
           </div>
 
-          {/* Split columns container */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
-            {/* Left Column */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
             <div className="space-y-6">
               <div>
                 <h3 className="text-xl font-semibold mb-2">Current State</h3>
@@ -302,7 +356,6 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
               </div>
             </div>
 
-            {/* Right Column */}
             <div className="space-y-6">
               <div>
                 <h3 className="text-xl font-semibold mb-2">Known Bugs</h3>
@@ -329,14 +382,14 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
             </div>
           </div>
 
-          <div className="flex justify-between">
+          <div className="flex flex-wrap justify-between gap-4">
             <a
               href={project.repoLink}
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-500 hover:underline"
             >
-              GitHub Repo
+              Repo Link
             </a>
             <a
               href={project.deployedLink}
@@ -344,12 +397,13 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
               rel="noopener noreferrer"
               className="text-blue-500 hover:underline"
             >
-              Live Demo
+              Deployed Link
             </a>
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 };
 
@@ -357,69 +411,23 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
 const Projects: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  // Add horizontal scroll on mouse wheel
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const handleWheel = (event: WheelEvent) => {
-      if (event.deltaY !== 0) {
-        // Check if the container has reached the start or end
-        const isAtStart = container.scrollLeft === 0;
-        const isAtEnd =
-          container.scrollLeft + container.clientWidth >= container.scrollWidth;
-
-        // If at the start and scrolling up, allow vertical scroll
-        if (isAtStart && event.deltaY < 0) {
-          return; // Let the default vertical scroll behavior handle it
-        }
-
-        // If at the end and scrolling down, allow vertical scroll
-        if (isAtEnd && event.deltaY > 0) {
-          return; // Let the default vertical scroll behavior handle it
-        }
-
-        // Otherwise, scroll horizontally
-        event.preventDefault();
-        container.scrollBy({
-          left: event.deltaY < 0 ? -100 : 100, // Adjust scroll speed
-          behavior: "smooth", // Smooth scrolling
-        });
-      }
-    };
-
-    container.addEventListener("wheel", handleWheel, { passive: false });
-
-    return () => {
-      container.removeEventListener("wheel", handleWheel);
-    };
-  }, []);
 
   return (
-    <section id="projects" className="min-h-screen py-20">
+    <section id="projects" className="min-h-screen py-16">
       <div className="container mx-auto px-4">
         {/* Section title */}
-        <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">
+        <h2 className="text-4xl md:text-5xl font-bold mb-10 text-center">
           Projects
         </h2>
-        {/* Horizontal scroll container */}
-        <div
-          ref={containerRef}
-          className="flex overflow-x-auto pb-4 scrollbar-hide" // Add scrollbar-hide to hide the scrollbar
-        >
-          {/* Flex container for project cards */}
-          <div className="flex space-x-8">
-            {projects.map((project) => (
-              <div key={project.id} className="flex-shrink-0">
-                <ProjectCard
-                  project={project}
-                  onClick={() => setSelectedProject(project)}
-                />
-              </div>
-            ))}
-          </div>
+        {/* Grid layout for project cards */}
+        <div className="grid gap-6 md:grid-cols-2">
+          {projects.map((project) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              onClick={() => setSelectedProject(project)}
+            />
+          ))}
         </div>
         {/* Note: The "Contact Me" button has been removed */}
       </div>
@@ -446,6 +454,26 @@ const ImageModal: React.FC<{ image: string; onClose: () => void }> = ({
   image,
   onClose,
 }) => {
+  useEffect(() => {
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+    const previousModalFlag = document.body.dataset.modalOpen;
+
+    document.body.dataset.modalOpen = "true";
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+
+    return () => {
+      if (previousModalFlag === undefined) {
+        delete document.body.dataset.modalOpen;
+      } else {
+        document.body.dataset.modalOpen = previousModalFlag;
+      }
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+    };
+  }, []);
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden max-h-full w-full max-w-4xl">
