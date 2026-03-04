@@ -32,6 +32,43 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 1,
+    title: "Inbox Buster",
+    description:
+      "Inbox Buster is a productivity tool designed to help users manage their email inbox more efficiently.",
+    skills: [
+      "Agentic AI",
+      "Claude AI",
+      "Claude Skills",
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Tailwind-CSS",
+      "AirTable",
+      "Vercel",
+      "CI/CD",
+    ],
+    image: "eclean-action.jpg",
+    imageOne: "/eclean-cat-mail.jpg",
+    imageTwo: "/eclean-done.jpg",
+    imageThree: "/eclean-unsub.jpg",
+    imageFour: "/eclean-slect-email.jpg",
+    currentState:
+      "In developement : Please join the wait list for updates and early access - https://inbox-buster-landing.vercel.app ",
+    featuresInDevelopment: ["iOS compatibility", "Email provider integrations"],
+    plannedFeatures: [
+      "Interactive dashboards and analytics",
+      "Profile Customization options",
+    ],
+    knownBugs: "N/A",
+    versionHistory: {
+      label: "",
+      url: "",
+    },
+    repoLink: "https://github.com/AJHemmings/inbox-buster",
+    deployedLink: "https://inbox-buster-landing.vercel.app",
+  },
+  {
+    id: 2,
     title: "Novari",
     description:
       "Novari is a platform designed to make personal growth accessible, interactive and community-driven.",
@@ -70,7 +107,7 @@ export const projects: Project[] = [
       "https://novari-git-main-adams-projects-ff804fb2.vercel.app/auth/signin",
   },
   {
-    id: 2,
+    id: 3,
     title: "Dam Anna (band website)",
     description:
       "A website for the band Dam Anna. 3D guitar model imported from blender and animated with Three.js. Admin dashboard designed for non technical band mates to contribute and change content. User photo-submissions go to admin review panel. Optimized for mobile devices and desktop.",
