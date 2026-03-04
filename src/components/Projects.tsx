@@ -47,7 +47,7 @@ export const projects: Project[] = [
       "Vercel",
       "CI/CD",
     ],
-    image: "eclean-action.jpg",
+    image: "/inbox-banner.jpg",
     imageOne: "/eclean-cat-mail.jpg",
     imageTwo: "/eclean-done.jpg",
     imageThree: "/eclean-unsub.jpg",
