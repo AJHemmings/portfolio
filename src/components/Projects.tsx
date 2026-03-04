@@ -359,7 +359,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                 alt={`${project.title} ${index + 1}`}
                 width={520}
                 height={360}
-                className="w-full h-56 object-cover rounded-xl"
+                className="w-full h-40 object-cover rounded-xl cursor-pointer"
                 onClick={() => onImageClick(image)}
               />
             ))}
