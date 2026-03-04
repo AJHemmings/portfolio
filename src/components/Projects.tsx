@@ -555,7 +555,7 @@ const ImageModal: React.FC<{ image: string; onClose: () => void }> = ({
             alt="Selected Image"
             width={800}
             height={600}
-            className="w-full h-auto object-contain rounded-lg"
+            className="max-h-[75vh] w-auto max-w-full mx-auto block object-contain rounded-lg"
           />
         </div>
       </div>
