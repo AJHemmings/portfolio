@@ -63,6 +63,7 @@ const About: React.FC<AboutProps> = ({
   const [currentParagraph, setCurrentParagraph] = useState(0);
   const lastWheelTimeRef = useRef(0);
   const activationTimeRef = useRef(0);
+  const cardTouchStartX = useRef(0);
 
   const paragraphs = [
     {
@@ -222,7 +223,25 @@ const About: React.FC<AboutProps> = ({
               About Me
             </h2>
 
-            <div className="mt-8 min-h-[320px] md:min-h-[360px] rounded-2xl border border-black/5 dark:border-white/10 bg-white/80 dark:bg-white/5 p-7 md:p-9 shadow-xl backdrop-blur">
+            <div
+              className="mt-8 min-h-[320px] md:min-h-[360px] rounded-2xl border border-black/5 dark:border-white/10 bg-white/80 dark:bg-white/5 p-7 md:p-9 shadow-xl backdrop-blur"
+              onTouchStart={(e) => {
+                cardTouchStartX.current = e.touches[0].clientX;
+              }}
+              onTouchEnd={(e) => {
+                const delta =
+                  cardTouchStartX.current - e.changedTouches[0].clientX;
+                if (Math.abs(delta) < 50) return;
+                const isAtStart = currentParagraph === 0;
+                const isAtEnd = currentParagraph === paragraphs.length - 1;
+                // Let section navigation handle exits at boundaries
+                if (delta > 0 && isAtEnd) return;
+                if (delta < 0 && isAtStart) return;
+                e.stopPropagation();
+                if (delta > 0) nextParagraph();
+                else prevParagraph();
+              }}
+            >
               <p
                 key={currentParagraph}
                 className={`text-lg md:text-xl leading-relaxed animate-fade-in-up ${
@@ -234,9 +253,43 @@ const About: React.FC<AboutProps> = ({
                 {paragraphs[currentParagraph].text}
               </p>
             </div>
-            <p className="mt-5 text-sm text-muted-foreground">
-              Scroll on the card to move through the story.
-            </p>
+
+            {/* Paragraph navigation */}
+            <div className="mt-5 flex items-center gap-4">
+              <button
+                onClick={prevParagraph}
+                disabled={currentParagraph === 0}
+                className="p-2 rounded-full border border-black/10 dark:border-white/10 disabled:opacity-30 hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+                aria-label="Previous"
+              >
+                ←
+              </button>
+              <div className="flex gap-2">
+                {paragraphs.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCurrentParagraph(i)}
+                    className={`w-2 h-2 rounded-full transition-all ${
+                      i === currentParagraph
+                        ? "bg-gray-800 dark:bg-white scale-125"
+                        : "bg-gray-400/50 dark:bg-white/30"
+                    }`}
+                    aria-label={`Go to paragraph ${i + 1}`}
+                  />
+                ))}
+              </div>
+              <button
+                onClick={nextParagraph}
+                disabled={currentParagraph === paragraphs.length - 1}
+                className="p-2 rounded-full border border-black/10 dark:border-white/10 disabled:opacity-30 hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+                aria-label="Next"
+              >
+                →
+              </button>
+              <p className="text-xs text-muted-foreground hidden sm:block">
+                Scroll or swipe to navigate
+              </p>
+            </div>
           </div>
         </div>
       </div>

@@ -21,6 +21,8 @@ const App: React.FC = () => {
   const [parallaxOffset, setParallaxOffset] = useState({ x: 0, y: 0 });
   const aboutExitRef = useRef<{ direction: number; time: number } | null>(null);
   const lastWheelTimeRef = useRef(0);
+  const touchStartX = useRef(0);
+  const touchStartY = useRef(0);
   const sections = useMemo(
     () => ["home", "about", "skills", "projects", "contact"],
     [],
@@ -106,10 +108,40 @@ const App: React.FC = () => {
     setActiveIndex(Math.min(Math.max(index, 0), sections.length - 1));
   };
 
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (document.body.dataset.modalOpen === "true") return;
+
+    const deltaX = touchStartX.current - e.changedTouches[0].clientX;
+    const deltaY = touchStartY.current - e.changedTouches[0].clientY;
+
+    // Only handle primarily horizontal swipes above a minimum threshold
+    if (Math.abs(deltaX) <= Math.abs(deltaY) || Math.abs(deltaX) < 50) return;
+
+    const direction = deltaX > 0 ? 1 : -1;
+
+    if (activeIndex === 1) {
+      const canExit =
+        (direction > 0 && aboutNavState.atEnd) ||
+        (direction < 0 && aboutNavState.atStart);
+      if (!canExit) return;
+    }
+
+    setActiveIndex((prev) =>
+      Math.min(Math.max(prev + direction, 0), sections.length - 1),
+    );
+  };
+
   return (
     <div
       className="min-h-screen text-gray-900 dark:text-gray-100"
       onWheel={handleWheel}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       <div className="parallax-layer" aria-hidden="true">
         <div className="parallax-base" />

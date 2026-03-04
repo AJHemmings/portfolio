@@ -491,7 +491,15 @@ const ImageModal: React.FC<{ image: string; onClose: () => void }> = ({
   image,
   onClose,
 }) => {
+  const [isMounted, setIsMounted] = useState(false);
+
   useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+
     const previousBodyOverflow = document.body.style.overflow;
     const previousHtmlOverflow = document.documentElement.style.overflow;
     const previousModalFlag = document.body.dataset.modalOpen;
@@ -509,15 +517,23 @@ const ImageModal: React.FC<{ image: string; onClose: () => void }> = ({
       document.body.style.overflow = previousBodyOverflow;
       document.documentElement.style.overflow = previousHtmlOverflow;
     };
-  }, []);
+  }, [isMounted]);
 
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden max-h-full w-full max-w-4xl">
-        <div className="p-6">
+  if (!isMounted) return null;
+
+  return createPortal(
+    <div
+      className="fixed inset-0 bg-black/80 flex items-center justify-center z-[60] p-4"
+      onClick={onClose}
+    >
+      <div
+        className="relative bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="p-4">
           <button
             onClick={onClose}
-            className="float-right text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+            className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
           >
             <svg
               className="w-6 h-6"
@@ -539,11 +555,12 @@ const ImageModal: React.FC<{ image: string; onClose: () => void }> = ({
             alt="Selected Image"
             width={800}
             height={600}
-            className="w-full h-full object-cover rounded-lg"
+            className="w-full h-auto object-contain rounded-lg"
           />
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 };
 
