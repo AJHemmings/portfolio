@@ -239,13 +239,23 @@ const ProjectCard: React.FC<{ project: Project; onClick: () => void }> = ({
       className="group bg-white/90 dark:bg-gray-900/70 rounded-2xl border border-black/5 dark:border-white/10 shadow-lg overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-xl flex flex-col h-full"
     >
       {/* Project image */}
-      <div className="w-full h-40 overflow-hidden">
+      <div className="relative w-full h-52 overflow-hidden">
+        {/* Blurred background layer */}
+        <div
+          className="absolute inset-0 scale-110"
+          style={{
+            backgroundImage: `url(${project.image || "/placeholder.svg"})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            filter: "blur(12px) brightness(0.5)",
+          }}
+        />
+        {/* Foreground image — contained, no cropping */}
         <Image
           src={project.image || "/placeholder.svg"}
           alt={project.title}
-          width={400}
-          height={300}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+          fill
+          className="object-contain transition-transform duration-500 group-hover:scale-[1.03]"
         />
       </div>
       {/* Project content */}
