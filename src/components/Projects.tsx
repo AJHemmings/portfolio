@@ -242,6 +242,7 @@ const ProjectCard: React.FC<{ project: Project; onClick: () => void }> = ({
       <div className="relative w-full h-52 overflow-hidden">
         {/* Blurred background layer */}
         <div
+          aria-hidden="true"
           className="absolute inset-0 scale-110"
           style={{
             backgroundImage: `url(${project.image || "/placeholder.svg"})`,
@@ -255,6 +256,7 @@ const ProjectCard: React.FC<{ project: Project; onClick: () => void }> = ({
           src={project.image || "/placeholder.svg"}
           alt={project.title}
           fill
+          sizes="(max-width: 768px) 100vw, 50vw"
           className="object-contain transition-transform duration-500 group-hover:scale-[1.03]"
         />
       </div>
