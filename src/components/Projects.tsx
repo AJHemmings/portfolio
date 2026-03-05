@@ -342,118 +342,143 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
 
   return createPortal(
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-y-auto max-h-[90vh] w-full max-w-5xl">
-        <div className="p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden">
+
+        {/* Header */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
+          <h2 className="text-2xl font-bold">{project.title}</h2>
           <button
             onClick={onClose}
-            className="float-right text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
           >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              ></path>
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
+        </div>
 
-          <h2 className="text-center text-3xl font-bold mb-6">
-            {project.title}
-          </h2>
+        {/* Split panel body */}
+        <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-            {allImages.map((image, index) => (
+          {/* LEFT: Image gallery */}
+          <div className="md:w-1/2 flex flex-col gap-3 p-4 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-700 flex-shrink-0">
+            {/* Featured image */}
+            <div
+              className="relative w-full bg-gray-950 rounded-xl overflow-hidden cursor-pointer"
+              style={{ aspectRatio: "4/3" }}
+              onClick={() => onImageClick(featuredImage)}
+            >
               <Image
-                key={`${project.title}-${index}`}
-                src={image}
-                alt={`${project.title} ${index + 1}`}
-                width={520}
-                height={360}
-                className="w-full h-40 object-cover rounded-xl cursor-pointer"
-                onClick={() => onImageClick(image)}
+                src={featuredImage}
+                alt={project.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-contain"
               />
-            ))}
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-            <div className="space-y-6">
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Current State</h3>
-                <p>{project.currentState}</p>
-              </div>
-
-              <div>
-                <h3 className="text-xl font-semibold mb-2">
-                  Features in Development
-                </h3>
-                <ul className="list-disc list-inside">
-                  {project.featuresInDevelopment.map((feature, index) => (
-                    <li key={index}>{feature}</li>
-                  ))}
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Planned Features</h3>
-                <ul className="list-disc list-inside">
-                  {project.plannedFeatures.map((feature, index) => (
-                    <li key={index}>{feature}</li>
-                  ))}
-                </ul>
-              </div>
             </div>
 
-            <div className="space-y-6">
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Known Bugs</h3>
-                <p className="text-red-500">{project.knownBugs}</p>
-              </div>
-
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Version History</h3>
-                {project.versionHistory ? (
-                  <a
-                    href={project.versionHistory.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 hover:underline"
+            {/* Thumbnail strip */}
+            {allImages.length > 1 && (
+              <div className="flex gap-2 overflow-x-auto pb-1">
+                {allImages.map((img, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setFeaturedImage(img)}
+                    className={`relative flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
+                      featuredImage === img
+                        ? "border-blue-500 opacity-100"
+                        : "border-transparent opacity-60 hover:opacity-90"
+                    }`}
                   >
-                    {project.versionHistory.label}
-                  </a>
-                ) : (
-                  <span className="text-yellow-600">
-                    Work in Progress (WIP)
-                  </span>
-                )}
+                    <Image
+                      src={img}
+                      alt={`${project.title} ${i + 1}`}
+                      fill
+                      sizes="64px"
+                      className="object-cover"
+                    />
+                  </button>
+                ))}
               </div>
+            )}
+          </div>
+
+          {/* RIGHT: Project info */}
+          <div className="md:w-1/2 overflow-y-auto p-6 flex flex-col gap-5">
+            <p className="text-sm text-gray-600 dark:text-gray-300">{project.description}</p>
+
+            <div>
+              <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-1">Current State</h3>
+              <p className="text-sm">{project.currentState}</p>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-1">Features in Development</h3>
+              <ul className="list-disc list-inside text-sm space-y-1">
+                {project.featuresInDevelopment.map((f, i) => <li key={i}>{f}</li>)}
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-1">Planned Features</h3>
+              <ul className="list-disc list-inside text-sm space-y-1">
+                {project.plannedFeatures.map((f, i) => <li key={i}>{f}</li>)}
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-1">Known Bugs</h3>
+              <p className="text-sm text-red-500">{project.knownBugs}</p>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-1">Version History</h3>
+              {project.versionHistory?.url ? (
+                <a
+                  href={project.versionHistory.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-blue-500 hover:underline"
+                >
+                  {project.versionHistory.label}
+                </a>
+              ) : (
+                <span className="text-sm text-yellow-600">Work in Progress (WIP)</span>
+              )}
+            </div>
+
+            <div>
+              <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-2">Skills</h3>
+              <div className="flex flex-wrap gap-2">
+                {project.skills.map((skill, i) => (
+                  <span key={i} className="bg-black/5 dark:bg-white/10 px-2.5 py-1 rounded-full text-xs uppercase tracking-wide">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Links */}
+            <div className="flex gap-3 mt-auto pt-2">
+              <a
+                href={project.repoLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 text-center text-sm font-medium px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              >
+                View Repo
+              </a>
+              <a
+                href={project.deployedLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 text-center text-sm font-medium px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+              >
+                Live Demo
+              </a>
             </div>
           </div>
 
-          <div className="flex flex-wrap justify-between gap-4">
-            <a
-              href={project.repoLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500 hover:underline"
-            >
-              Repo Link
-            </a>
-            <a
-              href={project.deployedLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500 hover:underline"
-            >
-              Deployed Link
-            </a>
-          </div>
         </div>
       </div>
     </div>,
