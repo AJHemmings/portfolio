@@ -330,10 +330,18 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
     return null;
   }
 
-  const modalImages = [project.imageOne, project.imageTwo].map(
-    (image) => image || project.image || "/placeholder.svg",
+  const allImages = [
+    project.imageOne,
+    project.imageTwo,
+    project.imageThree,
+    project.imageFour,
+  ]
+    .filter((img): img is string => Boolean(img))
+    .map((img) => img || "/placeholder.svg");
+
+  const [featuredImage, setFeaturedImage] = useState(
+    allImages[0] ?? project.image ?? "/placeholder.svg"
   );
-  // To enable images 3/4 later, add them to modalImages here.
 
   return createPortal(
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
@@ -364,7 +372,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-            {modalImages.map((image, index) => (
+            {allImages.map((image, index) => (
               <Image
                 key={`${project.title}-${index}`}
                 src={image}
