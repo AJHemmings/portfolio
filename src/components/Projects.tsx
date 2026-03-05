@@ -368,7 +368,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
         <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
 
           {/* LEFT: Image gallery */}
-          <div className="md:w-1/2 flex flex-col gap-3 p-4 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-700 flex-shrink-0">
+          <div className="md:w-1/2 flex flex-col gap-3 p-4 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-700 flex-shrink-0 max-h-64 md:max-h-none">
             {/* Featured image */}
             <button
               type="button"
@@ -415,7 +415,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
           </div>
 
           {/* RIGHT: Project info */}
-          <div className="md:w-1/2 overflow-y-auto p-6 flex flex-col gap-5">
+          <div className="md:w-1/2 overflow-y-auto p-6 flex flex-col gap-5 min-h-0">
             <p className="text-sm text-gray-600 dark:text-gray-300">{project.description}</p>
 
             <div>
@@ -586,10 +586,12 @@ const ImageModal: React.FC<{ image: string; onClose: () => void }> = ({
         <div className="p-4">
           <button
             onClick={onClose}
+            aria-label="Close image"
             className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
           >
             <svg
               className="w-6 h-6"
+              aria-hidden="true"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
