@@ -341,17 +341,24 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
   ].filter((img): img is string => Boolean(img));
 
   return createPortal(
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden">
+    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4" onClick={onClose}>
+      <div
+        className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden"
+        role="dialog"
+        aria-modal="true"
+        aria-label={project.title}
+        onClick={(e) => e.stopPropagation()}
+      >
 
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
           <h2 className="text-2xl font-bold">{project.title}</h2>
           <button
             onClick={onClose}
+            aria-label="Close modal"
             className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-6 h-6" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
@@ -363,7 +370,9 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
           {/* LEFT: Image gallery */}
           <div className="md:w-1/2 flex flex-col gap-3 p-4 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-700 flex-shrink-0">
             {/* Featured image */}
-            <div
+            <button
+              type="button"
+              aria-label={`Open full-size image for ${project.title}`}
               className="relative w-full bg-gray-950 rounded-xl overflow-hidden cursor-pointer"
               style={{ aspectRatio: "4/3" }}
               onClick={() => onImageClick(featuredImage)}
@@ -375,7 +384,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-contain"
               />
-            </div>
+            </button>
 
             {/* Thumbnail strip */}
             {allImages.length > 1 && (
@@ -384,6 +393,8 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                   <button
                     key={i}
                     onClick={() => setFeaturedImage(img)}
+                    aria-label={`View image ${i + 1} of ${project.title}`}
+                    aria-pressed={featuredImage === img}
                     className={`relative flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
                       featuredImage === img
                         ? "border-blue-500 opacity-100"
@@ -440,7 +451,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                   rel="noopener noreferrer"
                   className="text-sm text-blue-500 hover:underline"
                 >
-                  {project.versionHistory.label}
+                  {project.versionHistory.label || "View Changelog"}
                 </a>
               ) : (
                 <span className="text-sm text-yellow-600">Work in Progress (WIP)</span>
