@@ -299,6 +299,9 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
   onImageClick,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
+  const [featuredImage, setFeaturedImage] = useState(
+    project.imageOne || project.image || "/placeholder.svg"
+  );
 
   useEffect(() => {
     setIsMounted(true);
@@ -335,13 +338,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
     project.imageTwo,
     project.imageThree,
     project.imageFour,
-  ]
-    .filter((img): img is string => Boolean(img))
-    .map((img) => img || "/placeholder.svg");
-
-  const [featuredImage, setFeaturedImage] = useState(
-    allImages[0] ?? project.image ?? "/placeholder.svg"
-  );
+  ].filter((img): img is string => Boolean(img));
 
   return createPortal(
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
