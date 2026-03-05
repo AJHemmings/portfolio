@@ -60,10 +60,7 @@ export const projects: Project[] = [
       "Profile Customization options",
     ],
     knownBugs: "N/A",
-    versionHistory: {
-      label: "",
-      url: "",
-    },
+    versionHistory: null,
     repoLink: "https://github.com/AJHemmings/inbox-buster",
     deployedLink: "https://inbox-buster-landing.vercel.app",
   },
@@ -137,10 +134,7 @@ export const projects: Project[] = [
       "Social Media AI automation",
     ],
     knownBugs: "Minor UI jolt when opening and closing About Us Modal",
-    versionHistory: {
-      label: "",
-      url: "",
-    },
+    versionHistory: null,
     repoLink: "https://github.com/AJHemmings/dam-anna-web",
     deployedLink: "https://www.damannaband.com/",
   },
@@ -234,9 +228,10 @@ const ProjectCard: React.FC<{ project: Project; onClick: () => void }> = ({
   onClick,
 }) => {
   return (
-    <div
+    <button
+      type="button"
       onClick={onClick}
-      className="group bg-white/90 dark:bg-gray-900/70 rounded-2xl border border-black/5 dark:border-white/10 shadow-lg overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-xl flex flex-col h-full"
+      className="group bg-white/90 dark:bg-gray-900/70 rounded-2xl border border-black/5 dark:border-white/10 shadow-lg overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-xl flex flex-col h-full w-full text-left"
     >
       {/* Project image */}
       <div className="relative w-full h-52 overflow-hidden">
@@ -282,7 +277,7 @@ const ProjectCard: React.FC<{ project: Project; onClick: () => void }> = ({
           ))}
         </div>
       </div>
-    </div>
+    </button>
   );
 };
 
