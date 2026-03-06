@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { createPortal } from "react-dom";
 import DeletionAnimation from "./DeletionAnimation";
@@ -582,30 +582,53 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
 };
 
 // Main Projects component
-const Projects: React.FC = () => {
+interface ProjectsProps {
+  onNavStateChange?: (state: { atStart: boolean; atEnd: boolean }) => void;
+}
+
+const Projects: React.FC<ProjectsProps> = ({ onNavStateChange }) => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedAnimation, setSelectedAnimation] =
     useState<React.ComponentType | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!onNavStateChange) return;
+    const el = scrollRef.current;
+    const atEnd = el ? el.scrollHeight <= el.clientHeight + 1 : false;
+    onNavStateChange({ atStart: true, atEnd });
+  }, [onNavStateChange]);
+
+  const handleScroll = () => {
+    const el = scrollRef.current;
+    if (!el || !onNavStateChange) return;
+    const atStart = el.scrollTop <= 1;
+    const atEnd = el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
+    onNavStateChange({ atStart, atEnd });
+  };
 
   return (
-    <section id="projects" className="min-h-screen py-16">
-      <div className="container mx-auto px-4">
-        {/* Section title */}
-        <h2 className="text-4xl md:text-5xl font-bold mb-10 text-center">
+    <section id="projects" className="h-screen flex flex-col overflow-hidden">
+      {/* Pinned title — always visible */}
+      <div className="flex-shrink-0 py-10">
+        <h2 className="text-4xl md:text-5xl font-bold text-center">
           Projects
         </h2>
-        {/* Grid layout for project cards */}
-        <div className="grid gap-6 md:grid-cols-2">
-          {projects.map((project) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              onClick={() => setSelectedProject(project)}
-            />
-          ))}
+      </div>
+      {/* Scrollable cards — hidden behind the title when scrolled */}
+      <div ref={scrollRef} onScroll={handleScroll} className="flex-1 overflow-y-auto scrollbar-hide">
+        <div className="container mx-auto px-4 pb-8">
+          <div className="grid gap-6 md:grid-cols-2">
+            {projects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                onClick={() => setSelectedProject(project)}
+              />
+            ))}
+          </div>
         </div>
-        {/* Note: The "Contact Me" button has been removed */}
       </div>
       {/* Render ProjectModal when a project is selected */}
       {selectedProject && (

@@ -18,8 +18,13 @@ const App: React.FC = () => {
     atStart: true,
     atEnd: false,
   });
+  const [projectsNavState, setProjectsNavState] = useState({
+    atStart: true,
+    atEnd: false,
+  });
   const [parallaxOffset, setParallaxOffset] = useState({ x: 0, y: 0 });
   const aboutExitRef = useRef<{ direction: number; time: number } | null>(null);
+  const projectsExitRef = useRef<{ direction: number; time: number } | null>(null);
   const lastWheelTimeRef = useRef(0);
   const touchStartX = useRef(0);
   const touchStartY = useRef(0);
@@ -48,6 +53,12 @@ const App: React.FC = () => {
       aboutExitRef.current = null;
     }
   }, [activeIndex, aboutNavState]);
+
+  useEffect(() => {
+    if (activeIndex !== 3 || (!projectsNavState.atStart && !projectsNavState.atEnd)) {
+      projectsExitRef.current = null;
+    }
+  }, [activeIndex, projectsNavState]);
 
   const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
     if (document.body.dataset.modalOpen === "true") {
@@ -88,6 +99,28 @@ const App: React.FC = () => {
     if (isAboutLocked) {
       event.preventDefault();
       return;
+    }
+
+    if (activeIndex === 3) {
+      const canExit =
+        (direction > 0 && projectsNavState.atEnd) ||
+        (direction < 0 && projectsNavState.atStart);
+
+      if (!canExit) {
+        // Not at boundary — let the browser scroll the cards container
+        projectsExitRef.current = null;
+        return;
+      }
+
+      const now = Date.now();
+      const armed = projectsExitRef.current;
+      if (!armed || armed.direction !== direction || now - armed.time > 900) {
+        projectsExitRef.current = { direction, time: now };
+        event.preventDefault();
+        return;
+      }
+
+      projectsExitRef.current = null;
     }
 
     event.preventDefault();
@@ -172,7 +205,7 @@ const App: React.FC = () => {
           <Skills />
         </div>
         <div className="slider-panel scrollbar-hide">
-          <Projects />
+          <Projects onNavStateChange={setProjectsNavState} />
         </div>
         <div className="slider-panel">
           <Contact onBackToTop={() => handleNavigate(0)} />
