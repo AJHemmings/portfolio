@@ -171,7 +171,7 @@ const App: React.FC = () => {
         <div className="slider-panel">
           <Skills />
         </div>
-        <div className="slider-panel">
+        <div className="slider-panel scrollbar-hide">
           <Projects />
         </div>
         <div className="slider-panel">

@@ -4,6 +4,8 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { createPortal } from "react-dom";
+import DeletionAnimation from "./DeletionAnimation";
+import UnsubscribeAnimation from "./UnsubscribeAnimation";
 
 // Interface for project data structure
 export interface Project {
@@ -26,6 +28,7 @@ export interface Project {
   } | null;
   repoLink: string;
   deployedLink: string;
+  animationSlides?: React.ComponentType[];
 }
 
 // Array of project data
@@ -56,13 +59,14 @@ export const projects: Project[] = [
       "In developement : Please join the wait list for updates and early access - https://inbox-buster-landing.vercel.app ",
     featuresInDevelopment: ["iOS compatibility", "Email provider integrations"],
     plannedFeatures: [
-      "Interactive dashboards and analytics",
+      "Alert settings and reminders for capacity management",
       "Profile Customization options",
     ],
     knownBugs: "N/A",
     versionHistory: null,
     repoLink: "https://github.com/AJHemmings/inbox-buster",
     deployedLink: "https://inbox-buster-landing.vercel.app",
+    animationSlides: [DeletionAnimation, UnsubscribeAnimation],
   },
   {
     id: 2,
@@ -285,6 +289,7 @@ interface ProjectModalProps {
   project: Project;
   onClose: () => void;
   onImageClick: (image: string) => void;
+  onAnimationClick: (comp: React.ComponentType) => void;
 }
 
 // ProjectModal component
@@ -292,11 +297,10 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
   project,
   onClose,
   onImageClick,
+  onAnimationClick,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
-  const [featuredImage, setFeaturedImage] = useState(
-    project.imageOne || project.image || "/placeholder.svg",
-  );
+  const [featuredIndex, setFeaturedIndex] = useState(0);
 
   useEffect(() => {
     setIsMounted(true);
@@ -328,12 +332,17 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
     return null;
   }
 
-  const allImages = [
-    project.imageOne,
-    project.imageTwo,
-    project.imageThree,
-    project.imageFour,
-  ].filter((img): img is string => Boolean(img));
+  const allSlides: (string | React.ComponentType)[] = [
+    ...(project.animationSlides ?? []),
+    ...[
+      project.imageOne,
+      project.imageTwo,
+      project.imageThree,
+      project.imageFour,
+    ].filter((img): img is string => Boolean(img)),
+  ];
+  const featuredSlide =
+    allSlides[featuredIndex] ?? project.image ?? "/placeholder.svg";
 
   return createPortal(
     <div
@@ -376,45 +385,91 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
         <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
           {/* LEFT: Image gallery */}
           <div className="md:w-1/2 flex flex-col gap-3 p-4 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-700 flex-shrink-0 max-h-64 md:max-h-none">
-            {/* Featured image */}
-            <button
-              type="button"
-              aria-label={`Open full-size image for ${project.title}`}
-              className="relative w-full bg-gray-950 rounded-xl overflow-hidden cursor-pointer"
-              style={{ aspectRatio: "4/3" }}
-              onClick={() => onImageClick(featuredImage)}
-            >
-              <Image
-                src={featuredImage}
-                alt={project.title}
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-contain"
-              />
-            </button>
+            {/* Featured slide — image or animation component */}
+            {typeof featuredSlide === "string" ? (
+              <button
+                type="button"
+                aria-label={`Open full-size image for ${project.title}`}
+                className="relative w-full bg-gray-950 rounded-xl overflow-hidden cursor-pointer"
+                style={{ aspectRatio: "4/3" }}
+                onClick={() => onImageClick(featuredSlide)}
+              >
+                <Image
+                  src={featuredSlide}
+                  alt={project.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-contain"
+                />
+              </button>
+            ) : (
+              <button
+                type="button"
+                aria-label="Open full-size animation"
+                className="flex items-center justify-center py-4 rounded-xl bg-gray-950 overflow-hidden cursor-pointer w-full border-0"
+                onClick={() =>
+                  onAnimationClick(featuredSlide as React.ComponentType)
+                }
+              >
+                {(() => {
+                  const Comp = featuredSlide as React.ComponentType;
+                  return <Comp />;
+                })()}
+              </button>
+            )}
 
             {/* Thumbnail strip */}
-            {allImages.length > 1 && (
+            {allSlides.length > 1 && (
               <div className="flex gap-2 overflow-x-auto pb-1">
-                {allImages.map((img, i) => (
+                {allSlides.map((slide, i) => (
                   <button
                     key={i}
-                    onClick={() => setFeaturedImage(img)}
-                    aria-label={`View image ${i + 1} of ${project.title}`}
-                    aria-pressed={featuredImage === img}
+                    onClick={() => setFeaturedIndex(i)}
+                    aria-label={
+                      typeof slide === "string"
+                        ? `View image ${i + 1} of ${project.title}`
+                        : `View animation ${i + 1} of ${project.title}`
+                    }
+                    aria-pressed={featuredIndex === i}
                     className={`relative flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
-                      featuredImage === img
+                      featuredIndex === i
                         ? "border-blue-500 opacity-100"
                         : "border-transparent opacity-60 hover:opacity-90"
                     }`}
                   >
-                    <Image
-                      src={img}
-                      alt={`${project.title} ${i + 1}`}
-                      fill
-                      sizes="64px"
-                      className="object-cover"
-                    />
+                    {typeof slide === "string" ? (
+                      <Image
+                        src={slide}
+                        alt={`${project.title} ${i + 1}`}
+                        fill
+                        sizes="64px"
+                        className="object-cover"
+                      />
+                    ) : (
+                      <div
+                        style={{
+                          width: 64,
+                          height: 64,
+                          overflow: "hidden",
+                          background: "#1a1a2e",
+                        }}
+                      >
+                        <div
+                          style={{
+                            transform: "scale(0.246)",
+                            transformOrigin: "top left",
+                            width: 260,
+                            height: 480,
+                            pointerEvents: "none",
+                          }}
+                        >
+                          {(() => {
+                            const Comp = slide;
+                            return <Comp />;
+                          })()}
+                        </div>
+                      </div>
+                    )}
                   </button>
                 ))}
               </div>
@@ -530,6 +585,8 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
 const Projects: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedAnimation, setSelectedAnimation] =
+    useState<React.ComponentType | null>(null);
 
   return (
     <section id="projects" className="min-h-screen py-16">
@@ -556,6 +613,7 @@ const Projects: React.FC = () => {
           project={selectedProject}
           onClose={() => setSelectedProject(null)}
           onImageClick={(image) => setSelectedImage(image)}
+          onAnimationClick={(comp) => setSelectedAnimation(() => comp)}
         />
       )}
       {/* Render ImageModal when an image is selected */}
@@ -563,6 +621,13 @@ const Projects: React.FC = () => {
         <ImageModal
           image={selectedImage}
           onClose={() => setSelectedImage(null)}
+        />
+      )}
+      {/* Render AnimationModal when an animation is selected */}
+      {selectedAnimation && (
+        <AnimationModal
+          component={selectedAnimation}
+          onClose={() => setSelectedAnimation(null)}
         />
       )}
     </section>
@@ -581,23 +646,17 @@ const ImageModal: React.FC<{ image: string; onClose: () => void }> = ({
 
   useEffect(() => {
     if (!isMounted) return;
-
-    const previousBodyOverflow = document.body.style.overflow;
-    const previousHtmlOverflow = document.documentElement.style.overflow;
-    const previousModalFlag = document.body.dataset.modalOpen;
-
+    const prevBody = document.body.style.overflow;
+    const prevHtml = document.documentElement.style.overflow;
+    const prevFlag = document.body.dataset.modalOpen;
     document.body.dataset.modalOpen = "true";
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
-
     return () => {
-      if (previousModalFlag === undefined) {
-        delete document.body.dataset.modalOpen;
-      } else {
-        document.body.dataset.modalOpen = previousModalFlag;
-      }
-      document.body.style.overflow = previousBodyOverflow;
-      document.documentElement.style.overflow = previousHtmlOverflow;
+      if (prevFlag === undefined) delete document.body.dataset.modalOpen;
+      else document.body.dataset.modalOpen = prevFlag;
+      document.body.style.overflow = prevBody;
+      document.documentElement.style.overflow = prevHtml;
     };
   }, [isMounted]);
 
@@ -605,43 +664,93 @@ const ImageModal: React.FC<{ image: string; onClose: () => void }> = ({
 
   return createPortal(
     <div
-      className="fixed inset-0 bg-black/80 flex items-center justify-center z-[60] p-4"
+      className="fixed inset-0 bg-black/80 flex items-center justify-center z-[60] p-6"
       onClick={onClose}
     >
-      <div
-        className="relative bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="p-4">
-          <button
-            onClick={onClose}
-            aria-label="Close image"
-            className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+      <div className="relative" onClick={(e) => e.stopPropagation()}>
+        <button
+          onClick={onClose}
+          aria-label="Close image"
+          className="absolute -top-4 -right-4 z-10 bg-white dark:bg-gray-700 rounded-full w-8 h-8 flex items-center justify-center shadow-lg text-gray-500 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+        >
+          <svg
+            className="w-4 h-4"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
           >
-            <svg
-              className="w-6 h-6"
-              aria-hidden="true"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              ></path>
-            </svg>
-          </button>
-          <Image
-            src={image}
-            alt="Selected Image"
-            width={800}
-            height={600}
-            className="max-h-[75vh] w-auto max-w-full mx-auto block object-contain rounded-lg"
-          />
-        </div>
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={image}
+          alt="Selected Image"
+          className="max-h-[90vh] max-w-[calc(100vw-3rem)] w-auto h-auto block rounded-lg shadow-xl"
+        />
+      </div>
+    </div>,
+    document.body,
+  );
+};
+
+const AnimationModal: React.FC<{
+  component: React.ComponentType;
+  onClose: () => void;
+}> = ({ component: Comp, onClose }) => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+    const prevBody = document.body.style.overflow;
+    const prevHtml = document.documentElement.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prevBody;
+      document.documentElement.style.overflow = prevHtml;
+    };
+  }, [isMounted]);
+
+  if (!isMounted) return null;
+
+  return createPortal(
+    <div
+      className="fixed inset-0 bg-black/80 flex items-center justify-center z-[60] p-6"
+      onClick={onClose}
+    >
+      <div className="relative" onClick={(e) => e.stopPropagation()}>
+        <button
+          onClick={onClose}
+          aria-label="Close animation"
+          className="absolute -top-4 -right-4 z-10 bg-white dark:bg-gray-700 rounded-full w-8 h-8 flex items-center justify-center shadow-lg text-gray-500 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+        >
+          <svg
+            className="w-4 h-4"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+        <Comp />
       </div>
     </div>,
     document.body,
