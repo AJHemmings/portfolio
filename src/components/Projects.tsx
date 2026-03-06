@@ -32,7 +32,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 1,
-    title: "Inbox Buster",
+    title: "Inbox Buster - Mobile and desktop email management tool",
     description:
       "Inbox Buster is a productivity tool designed to help users manage their email inbox more efficiently.",
     skills: [
@@ -66,7 +66,7 @@ export const projects: Project[] = [
   },
   {
     id: 2,
-    title: "Novari",
+    title: "Novari - Personal Growth Platform",
     description:
       "Novari is a platform designed to make personal growth accessible, interactive and community-driven.",
     skills: [
@@ -105,7 +105,7 @@ export const projects: Project[] = [
   },
   {
     id: 3,
-    title: "Dam Anna (band website)",
+    title: "Dam Anna - Band Website",
     description:
       "A website for the band Dam Anna. 3D guitar model imported from blender and animated with Three.js. Admin dashboard designed for non technical band mates to contribute and change content. User photo-submissions go to admin review panel. Optimized for mobile devices and desktop.",
     skills: [
@@ -140,7 +140,7 @@ export const projects: Project[] = [
   },
   {
     id: 4,
-    title: "Mega OX",
+    title: "Mega OX - Online Multiplayer Naughts and Crosses (Tic-Tac-Toe)",
     description:
       "A modern twist on the classic Naughts and Crosses (Tic-Tac-Toe) game. The game features a macro board with 9 micro boards in each cell, creating a layered and strategic gameplay experience.",
     skills: ["TypeScript", "OOP", "React", "Docker", "CI/CD"],
@@ -171,7 +171,7 @@ export const projects: Project[] = [
   },
   {
     id: 5,
-    title: "Learning Material Content",
+    title: "Learning Material Content - JavaScript OOP Concepts",
     description:
       "JavaScript OOP Learning Material – A concise guide showcasing advanced Object-Oriented Programming concepts, designed to demonstrate clear articulation and deep understanding of JavaScript’s powerful OOP capabilities.",
     skills: [
@@ -295,7 +295,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
 }) => {
   const [isMounted, setIsMounted] = useState(false);
   const [featuredImage, setFeaturedImage] = useState(
-    project.imageOne || project.image || "/placeholder.svg"
+    project.imageOne || project.image || "/placeholder.svg",
   );
 
   useEffect(() => {
@@ -336,7 +336,10 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
   ].filter((img): img is string => Boolean(img));
 
   return createPortal(
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4" onClick={onClose}>
+    <div
+      className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4"
+      onClick={onClose}
+    >
       <div
         className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden"
         role="dialog"
@@ -344,7 +347,6 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
         aria-label={project.title}
         onClick={(e) => e.stopPropagation()}
       >
-
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
           <h2 className="text-2xl font-bold">{project.title}</h2>
@@ -353,15 +355,25 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
             aria-label="Close modal"
             className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
           >
-            <svg className="w-6 h-6" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+            <svg
+              className="w-6 h-6"
+              aria-hidden="true"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </div>
 
         {/* Split panel body */}
         <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
-
           {/* LEFT: Image gallery */}
           <div className="md:w-1/2 flex flex-col gap-3 p-4 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-700 flex-shrink-0 max-h-64 md:max-h-none">
             {/* Featured image */}
@@ -411,34 +423,50 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
 
           {/* RIGHT: Project info */}
           <div className="md:w-1/2 overflow-y-auto p-6 flex flex-col gap-5 min-h-0">
-            <p className="text-sm text-gray-600 dark:text-gray-300">{project.description}</p>
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              {project.description}
+            </p>
 
             <div>
-              <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-1">Current State</h3>
+              <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-1">
+                Current State
+              </h3>
               <p className="text-sm">{project.currentState}</p>
             </div>
 
             <div>
-              <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-1">Features in Development</h3>
+              <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-1">
+                Features in Development
+              </h3>
               <ul className="list-disc list-inside text-sm space-y-1">
-                {project.featuresInDevelopment.map((f, i) => <li key={i}>{f}</li>)}
+                {project.featuresInDevelopment.map((f, i) => (
+                  <li key={i}>{f}</li>
+                ))}
               </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-1">Planned Features</h3>
+              <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-1">
+                Planned Features
+              </h3>
               <ul className="list-disc list-inside text-sm space-y-1">
-                {project.plannedFeatures.map((f, i) => <li key={i}>{f}</li>)}
+                {project.plannedFeatures.map((f, i) => (
+                  <li key={i}>{f}</li>
+                ))}
               </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-1">Known Bugs</h3>
+              <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-1">
+                Known Bugs
+              </h3>
               <p className="text-sm text-red-500">{project.knownBugs}</p>
             </div>
 
             <div>
-              <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-1">Version History</h3>
+              <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-1">
+                Version History
+              </h3>
               {project.versionHistory?.url ? (
                 <a
                   href={project.versionHistory.url}
@@ -449,15 +477,22 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                   {project.versionHistory.label || "View Changelog"}
                 </a>
               ) : (
-                <span className="text-sm text-yellow-600">Work in Progress (WIP)</span>
+                <span className="text-sm text-yellow-600">
+                  Work in Progress (WIP)
+                </span>
               )}
             </div>
 
             <div>
-              <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-2">Skills</h3>
+              <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-2">
+                Skills
+              </h3>
               <div className="flex flex-wrap gap-2">
                 {project.skills.map((skill, i) => (
-                  <span key={i} className="bg-black/5 dark:bg-white/10 px-2.5 py-1 rounded-full text-xs uppercase tracking-wide">
+                  <span
+                    key={i}
+                    className="bg-black/5 dark:bg-white/10 px-2.5 py-1 rounded-full text-xs uppercase tracking-wide"
+                  >
                     {skill}
                   </span>
                 ))}
@@ -484,7 +519,6 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
               </a>
             </div>
           </div>
-
         </div>
       </div>
     </div>,
