@@ -177,6 +177,23 @@ body {
   animation: float-slower 16s ease-in-out infinite;
 }
 
+@keyframes unblur {
+  from {
+    opacity: 0;
+    filter: blur(14px);
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+.animate-unblur {
+  animation: unblur 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 .section-ambient {
   background: linear-gradient(
     180deg,

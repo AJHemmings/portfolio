@@ -87,7 +87,7 @@ const App: React.FC = () => {
 
       const now = Date.now();
       const armed = aboutExitRef.current;
-      if (!armed || armed.direction !== direction || now - armed.time > 900) {
+      if (!armed || armed.direction !== direction || now - armed.time > 1200) {
         aboutExitRef.current = { direction, time: now };
         event.preventDefault();
         return;
@@ -114,7 +114,7 @@ const App: React.FC = () => {
 
       const now = Date.now();
       const armed = projectsExitRef.current;
-      if (!armed || armed.direction !== direction || now - armed.time > 900) {
+      if (!armed || armed.direction !== direction || now - armed.time > 1200) {
         projectsExitRef.current = { direction, time: now };
         event.preventDefault();
         return;
@@ -126,7 +126,7 @@ const App: React.FC = () => {
     event.preventDefault();
 
     const now = Date.now();
-    if (now - lastWheelTimeRef.current < 1100) {
+    if (now - lastWheelTimeRef.current < 1700) {
       return;
     }
     lastWheelTimeRef.current = now;
@@ -202,13 +202,13 @@ const App: React.FC = () => {
           />
         </div>
         <div className="slider-panel">
-          <Skills />
+          <Skills isActive={activeIndex === 2} />
         </div>
         <div className="slider-panel scrollbar-hide">
-          <Projects onNavStateChange={setProjectsNavState} />
+          <Projects isActive={activeIndex === 3} onNavStateChange={setProjectsNavState} />
         </div>
         <div className="slider-panel">
-          <Contact onBackToTop={() => handleNavigate(0)} />
+          <Contact isActive={activeIndex === 4} onBackToTop={() => handleNavigate(0)} />
         </div>
       </div>
       <Analytics />

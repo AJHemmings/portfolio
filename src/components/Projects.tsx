@@ -581,26 +581,89 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
   );
 };
 
+const PROJECTS_HEADING = "Projects";
+type ProjAnimPhase = "idle" | "typing" | "moving-up" | "revealing" | "done";
+
 // Main Projects component
 interface ProjectsProps {
+  isActive?: boolean;
   onNavStateChange?: (state: { atStart: boolean; atEnd: boolean }) => void;
 }
 
-const Projects: React.FC<ProjectsProps> = ({ onNavStateChange }) => {
+const Projects: React.FC<ProjectsProps> = ({ isActive, onNavStateChange }) => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedAnimation, setSelectedAnimation] =
     useState<React.ComponentType | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  // Animation state
+  const [animPhase, setAnimPhase] = useState<ProjAnimPhase>("idle");
+  const [displayedHeading, setDisplayedHeading] = useState("");
+  const [cursorOn, setCursorOn] = useState(true);
+  const hasAnimated = useRef(false);
+
+  // Trigger animation once when section becomes active
+  useEffect(() => {
+    if (isActive && !hasAnimated.current) {
+      hasAnimated.current = true;
+      setAnimPhase("typing");
+    }
+  }, [isActive]);
+
+  // Type heading
+  useEffect(() => {
+    if (animPhase !== "typing") return;
+    if (displayedHeading.length >= PROJECTS_HEADING.length) {
+      const t = setTimeout(() => setAnimPhase("moving-up"), 500);
+      return () => clearTimeout(t);
+    }
+    const t = setTimeout(
+      () => setDisplayedHeading(PROJECTS_HEADING.slice(0, displayedHeading.length + 1)),
+      100,
+    );
+    return () => clearTimeout(t);
+  }, [animPhase, displayedHeading]);
+
+  // After heading slides up, reveal cards
+  useEffect(() => {
+    if (animPhase !== "moving-up") return;
+    const t = setTimeout(() => setAnimPhase("revealing"), 700);
+    return () => clearTimeout(t);
+  }, [animPhase]);
+
+  // Mark done
+  useEffect(() => {
+    if (animPhase !== "revealing") return;
+    const t = setTimeout(() => setAnimPhase("done"), 1000);
+    return () => clearTimeout(t);
+  }, [animPhase]);
+
+  // Cursor blink
+  useEffect(() => {
+    if (animPhase === "moving-up" || animPhase === "revealing" || animPhase === "done") {
+      setCursorOn(false);
+      return;
+    }
+    const interval = setInterval(() => setCursorOn((v) => !v), 520);
+    return () => clearInterval(interval);
+  }, [animPhase]);
+
+  // Report nav state: locked during animation, real scroll after
   useEffect(() => {
     if (!onNavStateChange) return;
+    if (animPhase !== "done") {
+      onNavStateChange({ atStart: true, atEnd: false });
+      return;
+    }
     const el = scrollRef.current;
-    const atEnd = el ? el.scrollHeight <= el.clientHeight + 1 : false;
+    if (!el) return;
+    const atEnd = el.scrollHeight <= el.clientHeight + 1;
     onNavStateChange({ atStart: true, atEnd });
-  }, [onNavStateChange]);
+  }, [animPhase, onNavStateChange]);
 
   const handleScroll = () => {
+    if (animPhase !== "done") return;
     const el = scrollRef.current;
     if (!el || !onNavStateChange) return;
     const atStart = el.scrollTop <= 1;
@@ -608,24 +671,51 @@ const Projects: React.FC<ProjectsProps> = ({ onNavStateChange }) => {
     onNavStateChange({ atStart, atEnd });
   };
 
+  const isCentered = animPhase === "idle" || animPhase === "typing";
+  const cardsVisible = animPhase === "revealing" || animPhase === "done";
+
   return (
     <section id="projects" className="h-screen flex flex-col overflow-hidden">
-      {/* Pinned title — always visible */}
+      {/* Pinned title — centred during typing, slides to top after */}
       <div className="flex-shrink-0 py-10">
-        <h2 className="text-4xl md:text-5xl font-bold text-center">
-          Projects
+        <h2
+          className="font-display text-4xl md:text-5xl tracking-tight text-center transition-transform duration-700 ease-in-out"
+          style={{
+            transform: isCentered ? "translateY(calc(45vh - 6rem))" : "translateY(0)",
+          }}
+        >
+          {animPhase === "idle" ? "\u00A0" : displayedHeading}
+          {cursorOn && animPhase === "typing" && (
+            <span aria-hidden="true" className="ml-0.5 opacity-60">|</span>
+          )}
         </h2>
       </div>
-      {/* Scrollable cards — hidden behind the title when scrolled */}
-      <div ref={scrollRef} onScroll={handleScroll} className="flex-1 overflow-y-auto scrollbar-hide">
+
+      {/* Scrollable cards */}
+      <div
+        ref={scrollRef}
+        onScroll={handleScroll}
+        className="flex-1 overflow-y-auto scrollbar-hide"
+      >
         <div className="container mx-auto px-4 pb-8">
           <div className="grid gap-6 md:grid-cols-2">
-            {projects.map((project) => (
-              <ProjectCard
+            {projects.map((project, i) => (
+              <div
                 key={project.id}
-                project={project}
-                onClick={() => setSelectedProject(project)}
-              />
+                style={
+                  cardsVisible
+                    ? {
+                        animation: "unblur 0.7s cubic-bezier(0.22, 1, 0.36, 1) both",
+                        animationDelay: `${i * 100}ms`,
+                      }
+                    : { opacity: 0 }
+                }
+              >
+                <ProjectCard
+                  project={project}
+                  onClick={() => setSelectedProject(project)}
+                />
+              </div>
             ))}
           </div>
         </div>

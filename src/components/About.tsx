@@ -1,6 +1,18 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 
+const LABEL = "About";
+const HEADING = "About Me";
+
+type AnimPhase =
+  | "idle"
+  | "typing-label"
+  | "pause-1"
+  | "typing-heading"
+  | "pause-2"
+  | "revealing"
+  | "done";
+
 const images = [
   { src: "/profile-v2.jpg", alt: "Image 1" },
   { src: "/Yuna in bed_1697207304640.jpg", alt: "Image 3" },
@@ -65,6 +77,86 @@ const About: React.FC<AboutProps> = ({
   const activationTimeRef = useRef(0);
   const cardTouchStartX = useRef(0);
 
+  // Typewriter state
+  const [animPhase, setAnimPhase] = useState<AnimPhase>("idle");
+  const [displayedLabel, setDisplayedLabel] = useState("");
+  const [displayedHeading, setDisplayedHeading] = useState("");
+  const [cursorOn, setCursorOn] = useState(true);
+  const hasAnimated = useRef(false);
+
+  // Trigger animation once when section becomes active
+  useEffect(() => {
+    if (isActive && !hasAnimated.current) {
+      hasAnimated.current = true;
+      setAnimPhase("typing-label");
+    }
+  }, [isActive]);
+
+  // Type label
+  useEffect(() => {
+    if (animPhase !== "typing-label") return;
+    if (displayedLabel.length >= LABEL.length) {
+      const t = setTimeout(() => setAnimPhase("pause-1"), 300);
+      return () => clearTimeout(t);
+    }
+    const t = setTimeout(
+      () => setDisplayedLabel(LABEL.slice(0, displayedLabel.length + 1)),
+      80,
+    );
+    return () => clearTimeout(t);
+  }, [animPhase, displayedLabel]);
+
+  // Pause between label and heading
+  useEffect(() => {
+    if (animPhase !== "pause-1") return;
+    const t = setTimeout(() => setAnimPhase("typing-heading"), 400);
+    return () => clearTimeout(t);
+  }, [animPhase]);
+
+  // Type heading
+  useEffect(() => {
+    if (animPhase !== "typing-heading") return;
+    if (displayedHeading.length >= HEADING.length) {
+      const t = setTimeout(() => setAnimPhase("pause-2"), 350);
+      return () => clearTimeout(t);
+    }
+    const t = setTimeout(
+      () => setDisplayedHeading(HEADING.slice(0, displayedHeading.length + 1)),
+      75,
+    );
+    return () => clearTimeout(t);
+  }, [animPhase, displayedHeading]);
+
+  // Pause then reveal card
+  useEffect(() => {
+    if (animPhase !== "pause-2") return;
+    const t = setTimeout(() => setAnimPhase("revealing"), 450);
+    return () => clearTimeout(t);
+  }, [animPhase]);
+
+  // Mark done after reveal
+  useEffect(() => {
+    if (animPhase !== "revealing") return;
+    const t = setTimeout(() => setAnimPhase("done"), 900);
+    return () => clearTimeout(t);
+  }, [animPhase]);
+
+  // Cursor blink
+  useEffect(() => {
+    if (animPhase === "revealing" || animPhase === "done") {
+      setCursorOn(false);
+      return;
+    }
+    const interval = setInterval(() => setCursorOn((v) => !v), 520);
+    return () => clearInterval(interval);
+  }, [animPhase]);
+
+  const showLabelCursor =
+    (animPhase === "typing-label" || animPhase === "pause-1") && cursorOn;
+  const showHeadingCursor =
+    (animPhase === "typing-heading" || animPhase === "pause-2") && cursorOn;
+  const cardVisible = animPhase === "revealing" || animPhase === "done";
+
   const paragraphs = [
     {
       text: (
@@ -116,6 +208,21 @@ const About: React.FC<AboutProps> = ({
           . Whether mastering new technologies or solving multidimensional
           problems by combining structured learning frameworks with creative
           execution.
+        </>
+      ),
+    },
+    {
+      text: (
+        <>
+          I have a keen interest in{" "}
+          <span className="font-semibold text-blue-600 dark:text-blue-400">
+            agentic workflows and sub-agent orchestration
+          </span>
+          , building systems where AI agents collaborate, delegate tasks, and
+          solve complex problems together. This intersection of software
+          development, product engineering, and AI coordination feels like the
+          next meaningful frontier, and it is an area I am actively exploring
+          and building in.
         </>
       ),
     },
@@ -216,15 +323,33 @@ const About: React.FC<AboutProps> = ({
           </div>
 
           <div className="max-w-xl">
-            <p className="text-xs uppercase tracking-[0.4em] text-muted-foreground">
-              About
+            <p
+              className="text-xs uppercase tracking-[0.4em] text-muted-foreground"
+              style={{ minHeight: "1.2em" }}
+            >
+              {animPhase === "idle" ? "\u00A0" : displayedLabel}
+              {showLabelCursor && (
+                <span aria-hidden="true" className="ml-0.5 opacity-60">
+                  |
+                </span>
+              )}
             </p>
-            <h2 className="mt-3 font-display text-4xl md:text-5xl tracking-tight">
-              About Me
+            <h2
+              className="mt-3 font-display text-4xl md:text-5xl tracking-tight"
+              style={{ minHeight: "1.3em" }}
+            >
+              {animPhase === "idle" ? "\u00A0" : displayedHeading}
+              {showHeadingCursor && (
+                <span aria-hidden="true" className="ml-0.5 opacity-60">
+                  |
+                </span>
+              )}
             </h2>
 
             <div
-              className="mt-8 min-h-[320px] md:min-h-[360px] rounded-2xl border border-black/5 dark:border-white/10 bg-white/80 dark:bg-white/5 p-7 md:p-9 shadow-xl backdrop-blur"
+              className={`mt-8 min-h-[320px] md:min-h-[360px] rounded-2xl border border-black/5 dark:border-white/10 bg-white/80 dark:bg-white/5 p-7 md:p-9 shadow-xl backdrop-blur ${
+                cardVisible ? "animate-unblur" : "opacity-0"
+              }`}
               onTouchStart={(e) => {
                 cardTouchStartX.current = e.touches[0].clientX;
               }}
@@ -234,7 +359,6 @@ const About: React.FC<AboutProps> = ({
                 if (Math.abs(delta) < 50) return;
                 const isAtStart = currentParagraph === 0;
                 const isAtEnd = currentParagraph === paragraphs.length - 1;
-                // Let section navigation handle exits at boundaries
                 if (delta > 0 && isAtEnd) return;
                 if (delta < 0 && isAtStart) return;
                 e.stopPropagation();
@@ -255,7 +379,11 @@ const About: React.FC<AboutProps> = ({
             </div>
 
             {/* Paragraph navigation */}
-            <div className="mt-5 flex items-center gap-4">
+            <div
+              className={`mt-5 flex items-center gap-4 transition-opacity duration-500 ${
+                cardVisible ? "opacity-100" : "opacity-0"
+              }`}
+            >
               <button
                 onClick={prevParagraph}
                 disabled={currentParagraph === 0}
