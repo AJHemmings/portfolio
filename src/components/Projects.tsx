@@ -40,24 +40,28 @@ export const projects: Project[] = [
       "Inbox Buster is a productivity tool designed to help users manage their email inbox more efficiently.",
     skills: [
       "Agentic AI",
-      "Claude AI",
-      "Claude Skills",
+      "Agentic Skills",
       "React",
       "Next.js",
       "TypeScript",
       "Tailwind-CSS",
       "AirTable",
+      "Firebase",
+      "Azure",
       "Vercel",
-      "CI/CD",
     ],
     image: "/inbox-banner.jpg",
     imageOne: "/eclean-cat-mail.jpg",
     imageTwo: "/eclean-done.jpg",
     imageThree: "/eclean-unsub.jpg",
-    imageFour: "/eclean-slect-email.jpg",
+    imageFour: "/eclean-select-email.jpg",
     currentState:
-      "In developement : Please join the wait list for updates and early access - https://inbox-buster-landing.vercel.app ",
-    featuresInDevelopment: ["iOS compatibility", "Email provider integrations"],
+      "In development : Please join the wait list for updates and early access - https://inbox-buster-landing.vercel.app ",
+    featuresInDevelopment: [
+      "Outlook integration",
+      "iOS compatibility",
+      "Further Email provider integrations",
+    ],
     plannedFeatures: [
       "Alert settings and reminders for capacity management",
       "Profile Customization options",
@@ -90,7 +94,7 @@ export const projects: Project[] = [
     imageThree: "/novari-home.png",
     imageFour: "/novari-community.png",
     currentState:
-      "In developement : please sign up OR sign in with email - guest@demo.com | password - demopassword1234 ",
+      "In development : please sign up OR sign in with email - guest@demo.com | password - demopassword1234 ",
     featuresInDevelopment: ["Direct Messaging", "Gamification enhancements"],
     plannedFeatures: [
       "Interactive dashboards and analytics",
@@ -133,7 +137,7 @@ export const projects: Project[] = [
     featuresInDevelopment: ["Mobile Optimization for the admin dashboard"],
     plannedFeatures: [
       "Styling",
-      "Social Media Management Intergration",
+      "Social Media Management Integration",
       "Mailing List",
       "Social Media AI automation",
     ],
@@ -619,7 +623,10 @@ const Projects: React.FC<ProjectsProps> = ({ isActive, onNavStateChange }) => {
       return () => clearTimeout(t);
     }
     const t = setTimeout(
-      () => setDisplayedHeading(PROJECTS_HEADING.slice(0, displayedHeading.length + 1)),
+      () =>
+        setDisplayedHeading(
+          PROJECTS_HEADING.slice(0, displayedHeading.length + 1),
+        ),
       100,
     );
     return () => clearTimeout(t);
@@ -641,7 +648,11 @@ const Projects: React.FC<ProjectsProps> = ({ isActive, onNavStateChange }) => {
 
   // Cursor blink
   useEffect(() => {
-    if (animPhase === "moving-up" || animPhase === "revealing" || animPhase === "done") {
+    if (
+      animPhase === "moving-up" ||
+      animPhase === "revealing" ||
+      animPhase === "done"
+    ) {
       setCursorOn(false);
       return;
     }
@@ -681,12 +692,16 @@ const Projects: React.FC<ProjectsProps> = ({ isActive, onNavStateChange }) => {
         <h2
           className="font-display text-4xl md:text-5xl tracking-tight text-center transition-transform duration-700 ease-in-out"
           style={{
-            transform: isCentered ? "translateY(calc(45vh - 6rem))" : "translateY(0)",
+            transform: isCentered
+              ? "translateY(calc(45vh - 6rem))"
+              : "translateY(0)",
           }}
         >
           {animPhase === "idle" ? "\u00A0" : displayedHeading}
           {cursorOn && animPhase === "typing" && (
-            <span aria-hidden="true" className="ml-0.5 opacity-60">|</span>
+            <span aria-hidden="true" className="ml-0.5 opacity-60">
+              |
+            </span>
           )}
         </h2>
       </div>
@@ -705,7 +720,8 @@ const Projects: React.FC<ProjectsProps> = ({ isActive, onNavStateChange }) => {
                 style={
                   cardsVisible
                     ? {
-                        animation: "unblur 0.7s cubic-bezier(0.22, 1, 0.36, 1) both",
+                        animation:
+                          "unblur 0.7s cubic-bezier(0.22, 1, 0.36, 1) both",
                         animationDelay: `${i * 100}ms`,
                       }
                     : { opacity: 0 }
