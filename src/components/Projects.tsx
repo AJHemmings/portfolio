@@ -56,7 +56,7 @@ export const projects: Project[] = [
     imageThree: "/eclean-unsub.jpg",
     imageFour: "/eclean-select-email.jpg",
     currentState:
-      "In development : Please join the wait list for updates and early access - https://inbox-buster-landing.vercel.app ",
+      "In development : Please join the wait list for updates and early access - https://inboxbuster.com",
     featuresInDevelopment: [
       "Outlook integration",
       "iOS compatibility",
