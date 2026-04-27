@@ -42,6 +42,7 @@ export const projects: Project[] = [
       "Agentic AI",
       "Agentic Skills",
       "React",
+      "React Native",
       "Next.js",
       "TypeScript",
       "Tailwind-CSS",
