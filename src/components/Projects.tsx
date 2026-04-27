@@ -69,7 +69,7 @@ export const projects: Project[] = [
     knownBugs: "N/A",
     versionHistory: null,
     repoLink: "https://github.com/AJHemmings/inbox-buster",
-    deployedLink: "https://inbox-buster-landing.vercel.app",
+    deployedLink: "https://inboxbuster.com",
     animationSlides: [DeletionAnimation, UnsubscribeAnimation],
   },
   {
