@@ -90,11 +90,11 @@ export const projects: Project[] = [
       "PostgreSQL",
       "Vercel",
     ],
-    image: "/stakd-hero.png",
+    image: "/stakd-hero.jpg",
     imageOne: "/stakd-cake.png",
     imageTwo: "/stakd-admin.png",
     imageThree: "/stakd-orders.png",
-    imageFour: "/stakd-hero.png",
+    imageFour: "/stakd-hero.jpg",
     currentState: "Functional MVP currently in active use",
     featuresInDevelopment: ["User signup", "User Profiles"],
     plannedFeatures: [
