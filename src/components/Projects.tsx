@@ -105,7 +105,7 @@ export const projects: Project[] = [
       "Minor layout shifts on the mobile grid view for the Admin dashboard when displaying large batch IDs.",
     versionHistory: null,
     repoLink: "https://github.com/AJHemmings/stakd.git",
-    deployedLink: "https://stakd-beta.vercel.app/",
+    deployedLink: "https://stakdbars.com",
   },
   {
     id: 3,
