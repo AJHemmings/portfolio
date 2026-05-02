@@ -75,42 +75,37 @@ export const projects: Project[] = [
   },
   {
     id: 2,
-    title: "Novari - Personal Growth Platform",
+    title: "STAK’D - Premium Built-to-Order E-Commerce & Operations Platform",
     description:
-      "Novari is a platform designed to make personal growth accessible, interactive and community-driven.",
+      "A bespoke, end-to-end e-commerce platform built for a premium baked goods business. STAK'D provides a stunning, high-performance customer storefront designed to highlight rich textures and bespoke flavor combinations. Beyond the storefront, it features a comprehensive, custom-built internal operations dashboard that automates daily workflows—including one-click generation of kitchen prep lists, batch order management, and formatted shipping label exports",
     skills: [
       "React",
       "Next.js",
       "TypeScript",
-      "DevOps",
-      "Tailwind-CSS",
-      "SQL",
+      "Vanilla CSS",
       "Supabase",
+      "Stripe",
+      "Zustand",
+      "Lucid UI",
+      "PostgreSQL",
       "Vercel",
-      "CI/CD",
     ],
-    image: "/novari.jpg",
-    imageOne: "/novari-community.png",
-    imageTwo: "/user-profile.png",
-    imageThree: "/novari-home.png",
-    imageFour: "/novari-community.png",
-    currentState:
-      "In development : please sign up OR sign in with email - guest@demo.com | password - demopassword1234 ",
-    featuresInDevelopment: ["Direct Messaging", "Gamification enhancements"],
+    image: "/stakd-hero.png",
+    imageOne: "/stakd-cake.png",
+    imageTwo: "/stakd-admin.png",
+    imageThree: "/stakd-orders.png",
+    imageFour: "/stakd-hero.png",
+    currentState: "Functional MVP currently in active use",
+    featuresInDevelopment: ["User signup", "User Profiles"],
     plannedFeatures: [
-      "Interactive dashboards and analytics",
-      "RAG - Vector database",
-      "Profile Customization options",
-      "More ember task options",
+      "Migration of hardcoded product imagery and mock data to full dynamic Supabase storage",
+      "Automated synchronization of operational data and daily batches with Google Sheets for external accounting",
     ],
-    knownBugs: "N/A",
-    versionHistory: {
-      label: "V 1.0.0 - View Changelog",
-      url: "https://docs.google.com/document/d/175JyxLvE5dpMrBYZSmhykMk8NyXi1GH_7bxAqh49mQs/edit?usp=sharing",
-    },
-    repoLink: "https://github.com/AJHemmings/Novari",
-    deployedLink:
-      "https://novari-git-main-adams-projects-ff804fb2.vercel.app/auth/signin",
+    knownBugs:
+      "Minor layout shifts on the mobile grid view for the Admin dashboard when displaying large batch IDs.",
+    versionHistory: null,
+    repoLink: "https://github.com/AJHemmings/stakd.git",
+    deployedLink: "https://movie-recommendation-library.vercel.app/",
   },
   {
     id: 3,
@@ -149,6 +144,45 @@ export const projects: Project[] = [
   },
   {
     id: 4,
+    title: "Novari - Personal Growth Platform",
+    description:
+      "Novari is a platform designed to make personal growth accessible, interactive and community-driven.",
+    skills: [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "DevOps",
+      "Tailwind-CSS",
+      "SQL",
+      "Supabase",
+      "Vercel",
+      "CI/CD",
+    ],
+    image: "/novari.jpg",
+    imageOne: "/novari-community.png",
+    imageTwo: "/user-profile.png",
+    imageThree: "/novari-home.png",
+    imageFour: "/novari-community.png",
+    currentState:
+      "In development : please sign up OR sign in with email - guest@demo.com | password - demopassword1234 ",
+    featuresInDevelopment: ["Direct Messaging", "Gamification enhancements"],
+    plannedFeatures: [
+      "Interactive dashboards and analytics",
+      "RAG - Vector database",
+      "Profile Customization options",
+      "More ember task options",
+    ],
+    knownBugs: "N/A",
+    versionHistory: {
+      label: "V 1.0.0 - View Changelog",
+      url: "https://docs.google.com/document/d/175JyxLvE5dpMrBYZSmhykMk8NyXi1GH_7bxAqh49mQs/edit?usp=sharing",
+    },
+    repoLink: "https://github.com/AJHemmings/Novari",
+    deployedLink:
+      "https://novari-git-main-adams-projects-ff804fb2.vercel.app/auth/signin",
+  },
+  {
+    id: 5,
     title: "Mega OX - Online Multiplayer Naughts and Crosses (Tic-Tac-Toe)",
     description:
       "A modern twist on the classic Naughts and Crosses (Tic-Tac-Toe) game. The game features a macro board with 9 micro boards in each cell, creating a layered and strategic gameplay experience.",
@@ -179,10 +213,10 @@ export const projects: Project[] = [
     deployedLink: "https://mega-ox.vercel.app/",
   },
   {
-    id: 5,
+    id: 6,
     title: "Learning Material Content - JavaScript OOP Concepts",
     description:
-      "JavaScript OOP Learning Material – A concise guide showcasing advanced Object-Oriented Programming concepts, designed to demonstrate clear articulation and deep understanding of JavaScript’s powerful OOP capabilities.",
+      "JavaScript OOP Learning Material – A concise guide showcasing advanced Object-Oriented Programming concepts, designed to demonstrate clear articulation and deep understanding of JavaScript's powerful OOP capabilities.",
     skills: [
       "JavaScript",
       "OOP",
@@ -205,30 +239,6 @@ export const projects: Project[] = [
       "https://www.canva.com/design/DAGfo7sA0rE/r0849jAvieA1ryT9jX40oQ/edit?utm_content=DAGfo7sA0rE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton",
     deployedLink: "https://youtu.be/89kiLc8i-B0",
   },
-
-  // {
-  //   id: 5,
-  //   title: "Personal Movie Recommendations",
-  //   description:
-  //     "A personal recommendation app that gives you vector based similarity searches based on user input from a movie database using Pinecone AI.",
-  //   skills: ["React", "Node.js", "JavaScript"],
-  //   image: "/movie1.png",
-  //   imageOne: "/movie1.png",
-  //   imageTwo: "/movie2.png",
-  //   currentState: "Dev - Under development",
-  //   featuresInDevelopment: ["User signup", "User Profiles"],
-  //   plannedFeatures: [
-  //     "User lists - watched - watching - waiting",
-  //     "Customization options",
-  //     "Movie thumbnails",
-  //     "Comment sections",
-  //   ],
-  //   knownBugs:
-  //     "Database is currently offline | CSS scrolling on sides refreshes every time a character is typed on the keyboard",
-  //   versionHistory: null,
-  //   repoLink: "https://github.com/AJHemmings/Movie-Recommendation-Library",
-  //   deployedLink: "https://movie-recommendation-library.vercel.app/",
-  // },
 ];
 
 // Project cards
