@@ -230,8 +230,9 @@ const About: React.FC<AboutProps> = ({
       text: (
         <>
           When I'm not coding, you can find me exploring nature trails with Yuna
-          (my dog), cultivating mushrooms, playing with my band "Dam Anna", or
-          feeding my endless curiosity about how things work.
+          (my dog), cultivating mushrooms, making chocolate bars, playing with
+          my band "Dam Anna", or feeding my endless curiosity about how things
+          work.
         </>
       ),
       isPersonal: true,
